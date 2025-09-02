@@ -1,36 +1,216 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# plaza - Expert-Curated Digital Marketplace
 
-## Getting Started
+A premium digital marketplace that combines fashion and fine art sales with expert curation and intelligent features. Built with a brutalist design philosophy for a powerful, futuristic user experience.
 
-First, run the development server:
+## 🎯 Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+plaza is an expert-curated marketplace where human specialists and intelligent tools enhance every aspect of buying and selling luxury items. The platform features:
+
+- **Visual Search & Discovery**: Upload images to find similar items
+- **Expert Authentication**: Specialists verify authenticity
+- **Market Intelligence**: Real-time pricing and trend analysis
+- **Personalized Curation**: Stylists curate based on user preferences
+- **Brutalist Design**: Bold, geometric interface with glass elements
+
+## 🚀 Tech Stack
+
+- **Frontend**: Next.js 14 with App Router
+- **Styling**: Tailwind CSS with custom brutalist design system
+- **Animations**: Framer Motion
+- **3D Graphics**: Three.js with React Three Fiber
+- **Icons**: Lucide React
+- **Typography**: Space Grotesk + JetBrains Mono
+- **Language**: TypeScript
+
+## 🎨 Design Philosophy - BRUTALIST FUTURISM
+
+### Visual Identity
+- **Monochrome palette**: Pure black text on white background
+- **Glass panels**: Semi-transparent sections with backdrop blur
+- **Bold typography**: Space Grotesk for headers, JetBrains Mono for data
+- **Geometric layouts**: Mathematical precision and rigid alignment
+- **Rounded corners**: Futuristic touch with rounded-2xl and rounded-3xl
+- **No decorative elements**: Function-first, raw digital architecture
+
+### Key Design Elements
+- `glass-panel`: Semi-transparent white with backdrop blur
+- `glass-panel-strong`: Higher opacity glass for emphasis
+- `btn-brutal`: Black buttons with white hover states
+- `ai-badge`: Monospace badges for AI confidence scores
+- `heading-xl/lg/md`: Responsive typography hierarchy
+- `mono-text`: Data and technical information styling
+
+## 🛠️ Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd plaza
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
+
+## 📁 Project Structure
+
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── browse/            # Product browsing with filters
+│   ├── sell/              # Seller dashboard with AI optimization
+│   ├── globals.css        # Brutalist design system
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Homepage with hero section
+└── components/            # Reusable components
+    ├── Header.tsx         # Navigation with AI search
+    ├── ProductCard.tsx    # Product display with AI metrics
+    └── AISearchInterface.tsx # Advanced search with image upload
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🤖 AI Features Implemented
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Visual Search Interface
+- **Image upload**: Drag & drop or click to upload
+- **AI analysis**: Simulated processing with confidence scores
+- **Multi-modal search**: Text, image, and voice input modes
+- **Real-time suggestions**: Dynamic search recommendations
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Product Intelligence
+- **AI Match scores**: Percentage-based relevance scoring
+- **Authenticity verification**: ML-powered authenticity badges
+- **Trend indicators**: Real-time trending status
+- **Price intelligence**: Market-based pricing suggestions
 
-## Learn More
+### 3. Smart Marketplace Features
+- **Personalized feeds**: AI-curated product recommendations
+- **Advanced filtering**: Multi-dimensional product filtering
+- **Market analytics**: Real-time market data and insights
+- **Seller optimization**: AI-powered listing enhancement
 
-To learn more about Next.js, take a look at the following resources:
+## 🎯 Key Components
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Header Component
+- Sticky navigation with backdrop blur
+- AI-powered search with real-time suggestions
+- Visual search upload functionality
+- User account and cart access
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### ProductCard Component
+- AI confidence indicators
+- Authenticity badges
+- Trending status
+- Interactive hover states
+- Social proof metrics
 
-## Deploy on Vercel
+### AISearchInterface Component
+- Multi-modal search (text, image, voice)
+- Real-time AI insights
+- Expandable interface
+- Processing animations
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 Design System Classes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Typography
+- `heading-xl`: Hero headings (2.5rem - 6rem)
+- `heading-lg`: Section headings (1.5rem - 3rem)
+- `heading-md`: Component headings (1rem - 1.5rem)
+- `body-text`: Regular content
+- `mono-text`: Technical data and metrics
+
+### Components
+- `glass-panel`: Semi-transparent containers
+- `btn-brutal`: Primary action buttons
+- `btn-brutal-outline`: Secondary buttons
+- `ai-badge`: AI confidence indicators
+
+### Layout
+- `border-brutal`: 2px black borders
+- `rounded-3xl`: Consistent border radius
+- `backdrop-blur-md`: Glass effect
+
+## 🚀 Development Roadmap
+
+### Phase 1: MVP (Current)
+- ✅ Brutalist design system
+- ✅ Core marketplace structure
+- ✅ AI search interface
+- ✅ Product cards with AI metrics
+- ✅ Browse and sell pages
+
+### Phase 2: Intelligence (Next)
+- [ ] Real AI integration (OpenAI Vision API)
+- [ ] User authentication system
+- [ ] Database integration
+- [ ] Payment processing
+- [ ] Advanced filtering
+
+### Phase 3: Advanced Features
+- [ ] 3D product previews
+- [ ] AR try-on capabilities
+- [ ] Mobile app development
+- [ ] Advanced analytics dashboard
+
+## 🎯 Performance Considerations
+
+- **Image optimization**: Next.js Image component integration
+- **Code splitting**: Automatic route-based splitting
+- **Lazy loading**: Components load on demand
+- **CDN ready**: Optimized for global deployment
+
+## 🔧 Customization
+
+### Adding New AI Features
+1. Create component in `src/components/`
+2. Follow brutalist design patterns
+3. Use AI badge system for confidence scores
+4. Implement glass panel styling
+
+### Extending the Design System
+1. Add new classes to `globals.css`
+2. Follow monochrome color scheme
+3. Use geometric shapes and sharp edges
+4. Maintain consistent spacing
+
+## 📊 Mock Data
+
+The application currently uses mock data to demonstrate AI features:
+- Product listings with AI scores
+- Market intelligence data
+- User interaction metrics
+- Trend analysis
+
+## 🌐 Deployment
+
+Ready for deployment on:
+- **Vercel** (recommended for Next.js)
+- **Netlify**
+- **AWS Amplify**
+- **Custom hosting**
+
+## 🤝 Contributing
+
+1. Follow the brutalist design philosophy
+2. Maintain AI-first approach
+3. Use TypeScript for all new code
+4. Test on multiple screen sizes
+5. Ensure accessibility compliance
+
+## 📄 License
+
+[Add your license here]
+
+---
+
+**plaza** - Where artificial intelligence meets luxury commerce.

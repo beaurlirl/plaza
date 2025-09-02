@@ -1,26 +1,243 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@400;500;700;900&display=swap');
+
+/* Union Helvetica Custom Font */
+@font-face {
+  font-family: 'Union Helvetica';
+  src: url('/fonts/unionforplaza/Union-Regular copy 4.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Union Helvetica';
+  src: url('/fonts/unionforplaza/Union-Bold copy 2.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Union Helvetica';
+  src: url('/fonts/unionforplaza/Union-Italic copy 5.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Union Helvetica';
+  src: url('/fonts/unionforplaza/Union-BoldItalic copy 2.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
+  --glass-white: rgba(255, 255, 255, 0.6);
+  --glass-white-strong: rgba(255, 255, 255, 0.8);
+  --shadow-brutal: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --border-brutal: 2px solid #000000;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  line-height: 1.5;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Brutalist Glass Components */
+.glass-panel {
+  background: var(--glass-white);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: var(--border-brutal);
+  box-shadow: var(--shadow-brutal);
+}
+
+.glass-panel-strong {
+  background: var(--glass-white-strong);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: var(--border-brutal);
+  box-shadow: var(--shadow-brutal);
+}
+
+/* Brutalist Typography */
+.heading-xl {
+  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.heading-lg {
+  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.heading-md {
+  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.body-text {
+  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.mono-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+}
+
+/* Brutalist Buttons */
+.btn-brutal {
+  background: #000000;
+  color: #ffffff;
+  border: var(--border-brutal);
+  padding: 1rem 2rem;
+  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.btn-brutal:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.btn-brutal-outline {
+  background: transparent;
+  color: #000000;
+  border: var(--border-brutal);
+  padding: 1rem 2rem;
+  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.btn-brutal-outline:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* AI Elements */
+.ai-badge {
+  background: #000000;
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 0;
+}
+
+.confidence-bar {
+  height: 4px;
+  background: #000000;
+  transition: width 0.3s ease;
+}
+
+/* Animations */
+@keyframes slideInBrutal {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideInBrutal 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes gentle-wave {
+  0% { transform: scale(1) rotate(0deg) translateY(0px); }
+  25% { transform: scale(1.01) rotate(0.5deg) translateY(-2px); }
+  50% { transform: scale(1) rotate(-0.5deg) translateY(0px); }
+  75% { transform: scale(0.99) rotate(0.25deg) translateY(2px); }
+  100% { transform: scale(1) rotate(0deg) translateY(0px); }
+}
+
+.animate-gentle-wave {
+  animation: gentle-wave 6s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(45deg); }
+  to { transform: rotate(405deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* Selection */
+::selection {
+  background: #000000;
+  color: #ffffff;
 }
