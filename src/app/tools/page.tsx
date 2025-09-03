@@ -51,7 +51,7 @@ export default function Tools() {
                 }}
               >
                 <div className="absolute top-[25%] left-0 right-0 text-center">
-                  <div className="text-lg font-bold text-white drop-shadow-lg">plaza</div>
+                  <div className="text-lg font-normal text-white drop-shadow-lg">plaza</div>
                 </div>
                 <div className="absolute bottom-[25%] left-0 right-0 text-center">
                   <div className="text-sm font-light text-white drop-shadow-lg">design</div>
@@ -112,7 +112,7 @@ export default function Tools() {
                   {/* Text Layer */}
                   <div className="absolute inset-0" style={{ zIndex: 10 }}>
                     <div className="absolute top-[20%] left-0 right-0 text-center">
-                      <div className="text-lg font-bold text-black drop-shadow-lg">plaza</div>
+                      <div className="text-lg font-normal text-black drop-shadow-lg">plaza</div>
                     </div>
                     <div className="absolute bottom-[20%] left-0 right-0 text-center">
                       <div className="text-sm font-light text-black drop-shadow-lg">mixtape</div>

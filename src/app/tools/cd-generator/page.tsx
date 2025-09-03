@@ -140,7 +140,7 @@ export default function CDGenerator() {
           {/* Text Layer */}
           <div className="absolute inset-0" style={{ zIndex: 10 }}>
             <div className="absolute top-[20%] left-0 right-0 text-center">
-              <div className="text-xl font-black text-white drop-shadow-lg">{cdText.title}</div>
+              <div className="text-xl font-normal text-white drop-shadow-lg">{cdText.title}</div>
             </div>
             <div className="absolute bottom-[20%] left-0 right-0 text-center">
               <div className="text-lg font-medium text-white drop-shadow-lg">{cdText.artist}</div>

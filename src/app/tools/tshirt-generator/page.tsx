@@ -86,7 +86,7 @@ export default function TshirtGenerator() {
       >
         {/* Title - Above center */}
         <div className="absolute top-[20%] left-0 right-0 text-center">
-          <div className="text-2xl font-black text-white drop-shadow-lg">{shirtText.title}</div>
+          <div className="text-2xl font-normal text-white drop-shadow-lg">{shirtText.title}</div>
         </div>
 
         {/* Subtitle - Below center */}
