@@ -62,7 +62,8 @@ const productData = {
   },
 };
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
+export default async function ProductDetail({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
   const [selectedImage, setSelectedImage] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [selectedSize, setSelectedSize] = useState('M');
