@@ -521,8 +521,10 @@ export default function Calendar() {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-2xl glass-panel-strong rounded-3xl p-8 z-50 max-h-[80vh] overflow-y-auto"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
           >
+            <div className="w-full max-w-2xl glass-panel-strong rounded-3xl p-4 sm:p-6 lg:p-8 max-h-[90vh] overflow-y-auto"
+            >
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h2 className="heading-lg text-black">
@@ -636,6 +638,7 @@ export default function Calendar() {
                 ))}
               </div>
             )}
+            </div>
           </motion.div>
         </>
       )}

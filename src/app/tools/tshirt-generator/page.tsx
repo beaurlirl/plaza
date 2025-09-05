@@ -173,7 +173,8 @@ export default function TshirtGenerator() {
       {isPopupActive && (
         <>
           <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsPopupActive(false)} />
-          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-md glass-panel-strong rounded-3xl p-4 sm:p-6 lg:p-8 z-50">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="w-full max-w-md glass-panel-strong rounded-3xl p-4 sm:p-6 lg:p-8">
             <h2 className="heading-md text-black mb-6">edit text</h2>
             <div className="space-y-4">
               <div>
@@ -213,6 +214,7 @@ export default function TshirtGenerator() {
             >
               SAVE CHANGES
             </button>
+            </div>
           </div>
         </>
       )}
