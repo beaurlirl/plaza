@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header className="w-full bg-white/80 backdrop-blur-md border-b-brutal border-black sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
@@ -21,13 +21,13 @@ export default function Header() {
           </div>
 
           {/* Search Bar */}
-          <div className="flex-1 max-w-2xl mx-4 md:mx-8 hidden md:block">
+          <div className="flex-1 max-w-2xl mx-4 lg:mx-8 hidden lg:block">
             <div className={`relative transition-all duration-200 ${isSearchFocused ? 'transform -translate-y-1' : ''}`}>
               <div className="glass-panel-strong rounded-3xl p-4 flex items-center space-x-4">
                 <Search className="w-6 h-6 text-black" />
                 <input
                   type="text"
-                  placeholder="SEARCH • DESCRIBE WHAT YOU WANT OR WHERE YOU WANT IT FROM"
+                  placeholder="SEARCH • DESCRIBE WHAT YOU WANT"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setIsSearchFocused(true)}
@@ -61,8 +61,27 @@ export default function Header() {
             </div>
           </div>
 
+          {/* Tablet Navigation (md to lg) */}
+          <nav className="hidden md:flex lg:hidden items-center space-x-2">
+            <a href="/browse" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-xs px-2 py-1">
+              BROWSE
+            </a>
+            <a href="/sell" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-xs px-2 py-1">
+              SELL
+            </a>
+            <a href="/tools" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-xs px-2 py-1">
+              TOOLS
+            </a>
+            <button className="p-2 hover:bg-black/5 rounded-2xl transition-colors">
+              <ShoppingBag className="w-5 h-5 text-black" />
+            </button>
+            <button className="p-2 hover:bg-black/5 rounded-2xl transition-colors">
+              <User className="w-5 h-5 text-black" />
+            </button>
+          </nav>
+
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
             <a href="/browse" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm">
               BROWSE
             </a>
@@ -84,19 +103,19 @@ export default function Header() {
           </nav>
 
           {/* Mobile Navigation */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="md:hidden flex items-center space-x-1 sm:space-x-2">
             <button 
               onClick={() => setShowMobileSearch(!showMobileSearch)}
-              className="p-3 hover:bg-black/5 rounded-2xl transition-colors"
+              className="p-2 sm:p-3 hover:bg-black/5 rounded-2xl transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <Search className="w-5 h-5 text-black" />
             </button>
-            <button className="p-3 hover:bg-black/5 rounded-2xl transition-colors">
+            <button className="p-2 sm:p-3 hover:bg-black/5 rounded-2xl transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
               <ShoppingBag className="w-5 h-5 text-black" />
             </button>
             <button 
               onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="p-3 hover:bg-black/5 rounded-2xl transition-colors"
+              className="p-2 sm:p-3 hover:bg-black/5 rounded-2xl transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <Menu className="w-5 h-5 text-black" />
             </button>
@@ -105,15 +124,15 @@ export default function Header() {
         
         {/* Mobile Search */}
         {showMobileSearch && (
-          <div className="md:hidden border-t-brutal border-black p-4">
+          <div className="md:hidden border-t-brutal border-black p-3 sm:p-4">
             <div className="glass-panel-strong rounded-3xl p-4 flex items-center space-x-4">
               <Search className="w-5 h-5 text-black" />
               <input
                 type="text"
-                placeholder="SEARCH • DESCRIBE WHAT YOU WANT OR WHERE YOU WANT IT FROM"
+                placeholder="SEARCH ITEMS"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 bg-transparent border-none outline-none text-black placeholder-black/60 font-union font-medium text-sm uppercase tracking-wide"
+                className="flex-1 bg-transparent border-none outline-none text-black placeholder-black/60 font-union font-medium text-xs sm:text-sm uppercase tracking-wide"
               />
               <button className="p-2 hover:bg-black/5 rounded-2xl transition-colors">
                 <Upload className="w-4 h-4 text-black" />
@@ -124,22 +143,22 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {showMobileMenu && (
-          <div className="md:hidden border-t-brutal border-black">
-            <nav className="p-4 space-y-4">
-              <a href="/browse" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-3">
+          <div className="md:hidden border-t-brutal border-black max-h-[calc(100vh-80px)] overflow-y-auto">
+            <nav className="p-3 sm:p-4 space-y-2 sm:space-y-4">
+              <a href="/browse" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
                 BROWSE
               </a>
-              <a href="/sell" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-3">
+              <a href="/sell" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
                 SELL
               </a>
-              <a href="/tools" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-3">
+              <a href="/tools" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
                 TOOLS
               </a>
-              <a href="/calendar" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-3">
+              <a href="/calendar" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
                 CALENDAR
               </a>
-              <div className="pt-4 border-t border-black/20">
-                <button className="flex items-center space-x-3 body-text font-medium uppercase tracking-wide text-sm py-3">
+              <div className="pt-2 sm:pt-4 border-t border-black/20">
+                <button className="flex items-center space-x-3 body-text font-medium uppercase tracking-wide text-sm py-2 sm:py-3 min-h-[44px] w-full">
                   <User className="w-5 h-5 text-black" />
                   <span>PROFILE</span>
                 </button>

@@ -63,22 +63,22 @@ export default function CDGenerator() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-between p-4 md:p-6">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-between p-4 sm:p-6">
       {/* Header */}
-      <div className="w-full max-w-4xl flex flex-col md:flex-row items-center justify-between mb-8 space-y-4 md:space-y-0">
-        <a href="/tools" className="flex items-center space-x-3 hover:text-black/60 transition-colors self-start md:self-center">
+      <div className="w-full max-w-4xl flex flex-col lg:flex-row items-center justify-between mb-6 sm:mb-8 space-y-4 lg:space-y-0">
+        <a href="/tools" className="flex items-center space-x-3 hover:text-black/60 transition-colors self-start lg:self-center">
           <ArrowLeft className="w-5 h-5" />
           <span className="mono-text text-sm uppercase tracking-wide">back to tools</span>
         </a>
-        <h1 className="heading-lg md:heading-xl text-black">cd generator</h1>
-        <div className="hidden md:block w-32" /> {/* Spacer */}
+        <h1 className="heading-lg lg:heading-xl text-black">cd generator</h1>
+        <div className="hidden lg:block w-32" /> {/* Spacer */}
       </div>
 
       {/* CD Display */}
       <div 
         ref={cdRef}
         onClick={() => setIsPopupActive(true)}
-        className="w-64 h-64 md:w-80 md:h-80 relative cursor-pointer aspect-square mb-8"
+        className="w-56 h-56 sm:w-64 sm:h-64 lg:w-80 lg:h-80 relative cursor-pointer aspect-square mb-6 sm:mb-8"
         style={{
           perspective: '1000px',
           transformStyle: 'preserve-3d',
@@ -225,7 +225,7 @@ export default function CDGenerator() {
       {isPopupActive && (
         <>
           <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsPopupActive(false)} />
-          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md glass-panel-strong rounded-3xl p-8 z-50">
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-md glass-panel-strong rounded-3xl p-4 sm:p-6 lg:p-8 z-50">
             <h2 className="heading-md text-black mb-6">edit cd text</h2>
             <div className="space-y-4">
               <div>

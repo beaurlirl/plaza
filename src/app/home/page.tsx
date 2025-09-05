@@ -119,18 +119,18 @@ export default function HomePage() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="px-6 py-8 border-b-4 border-black"
+        className="px-4 sm:px-6 py-6 sm:py-8 border-b-4 border-black"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-4xl font-normal lowercase text-black">plaza</h1>
-          <div className="text-sm font-medium uppercase tracking-wider text-black/60">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-normal lowercase text-black">plaza</h1>
+          <div className="text-xs sm:text-sm font-medium uppercase tracking-wider text-black/60">
             DIGITAL HUB
           </div>
         </div>
       </motion.header>
 
       {/* Main Navigation System */}
-      <main className="px-6 py-16">
+      <main className="px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto">
           
           {/* Title Section */}
@@ -140,18 +140,18 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-20"
           >
-            <h2 className="heading-lg text-black mb-6">
+            <h2 className="heading-lg text-black mb-4 sm:mb-6">
               CHOOSE YOUR EXPERIENCE
             </h2>
-            <p className="body-text text-xl text-black/70 max-w-3xl mx-auto">
+            <p className="body-text text-base sm:text-lg lg:text-xl text-black/70 max-w-3xl mx-auto">
               Three interconnected pillars of culture, commerce, and creativity.
-              <br />
-              Each experience is curated by experts and enhanced by intelligent systems.
+              <br className="hidden sm:block" />
+              <span className="sm:hidden"> </span>Each experience is curated by experts and enhanced by intelligent systems.
             </p>
           </motion.div>
 
           {/* Stacked Bubble Navigation */}
-          <div className="space-y-8 max-w-5xl mx-auto">
+          <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto">
             {pillars.map((pillar, index) => (
               <motion.div
                 key={pillar.id}
@@ -170,11 +170,11 @@ export default function HomePage() {
                   className={`absolute inset-0 bg-gradient-to-br ${pillar.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
                 />
                 
-                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 items-center">
                   
                   {/* Left: Icon and Title */}
                   <div className="text-center lg:text-left">
-                    <div className={`inline-flex items-center justify-center w-20 h-20 mb-6 transition-colors duration-300 ${
+                    <div className={`inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 mb-4 sm:mb-6 transition-colors duration-300 ${
                       selectedPillar === pillar.id ? 'text-white' : 'text-black'
                     }`}>
                       {pillar.icon}
@@ -193,12 +193,12 @@ export default function HomePage() {
 
                   {/* Center: Description and Preview */}
                   <div className="text-center">
-                    <p className={`body-text mb-6 transition-colors duration-300 ${
+                    <p className={`body-text text-sm sm:text-base mb-4 sm:mb-6 transition-colors duration-300 ${
                       selectedPillar === pillar.id ? 'text-white/90' : 'text-black/70'
                     }`}>
                       {pillar.description}
                     </p>
-                    <div className="max-w-xs mx-auto">
+                    <div className="max-w-xs mx-auto hidden sm:block">
                       {pillar.id === 'market' && <MarketPreview />}
                       {pillar.id === 'generators' && <GeneratorsPreview />}
                       {pillar.id === 'calendar' && <CalendarPreview />}
@@ -207,7 +207,7 @@ export default function HomePage() {
 
                   {/* Right: Stats and Action */}
                   <div className="text-center lg:text-right">
-                    <div className="grid grid-cols-3 lg:grid-cols-1 gap-4 mb-8">
+                    <div className="grid grid-cols-3 lg:grid-cols-1 gap-2 sm:gap-4 mb-4 sm:mb-8">
                       {pillar.stats.map((stat) => (
                         <div key={stat.label}>
                           <div className={`heading-md transition-colors duration-300 ${
@@ -243,7 +243,7 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="mt-20 glass-panel-strong rounded-3xl p-12"
           >
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center">
               <div>
                 <TrendingUp className="w-8 h-8 text-black mx-auto mb-4" />
                 <div className="heading-md text-black mb-2">847MS</div>

@@ -31,7 +31,7 @@ export default function Sell() {
     <div className="min-h-screen bg-white">
       <Header />
       
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 lg:py-12">
         {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -46,9 +46,9 @@ export default function Sell() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
           {/* Main Listing Form */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-6 lg:space-y-8">
             {/* Category Selection */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -57,7 +57,7 @@ export default function Sell() {
               className="glass-panel rounded-3xl p-8"
             >
               <h2 className="heading-lg text-black mb-6">ITEM CATEGORY</h2>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <button
                   onClick={() => setSelectedCategory('fashion')}
                   className={`p-8 rounded-2xl border-brutal transition-all ${
@@ -124,7 +124,7 @@ export default function Sell() {
                 </label>
               ) : (
                 <div className="space-y-6">
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {uploadedImages.map((image, index) => (
                       <div key={index} className="relative aspect-square">
                         <img
@@ -184,7 +184,7 @@ export default function Sell() {
                   />
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="mono-text text-sm text-black/60 mb-2 block">YOUR PRICE</label>
                     <input
@@ -209,7 +209,7 @@ export default function Sell() {
           </div>
 
           {/* AI Insights Sidebar */}
-          <div className="space-y-8">
+          <div className="space-y-6 lg:space-y-8 order-first lg:order-last">
             {/* AI Analysis Panel */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}

@@ -98,7 +98,7 @@ export default function Browse() {
     <div className="min-h-screen bg-white">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 lg:py-12">
         {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -119,11 +119,11 @@ export default function Browse() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="glass-panel rounded-3xl p-6 mb-12"
         >
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 lg:gap-6">
             {/* Category Filters */}
-            <div className="flex items-center space-x-4">
-              <span className="mono-text text-sm text-black/60">CATEGORY:</span>
-              <div className="flex items-center space-x-2">
+            <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full lg:w-auto">
+              <span className="mono-text text-xs sm:text-sm text-black/60">CATEGORY:</span>
+              <div className="flex items-center space-x-2 overflow-x-auto pb-2 sm:pb-0">
                 {['all', 'fashion', 'art'].map((category) => (
                   <button
                     key={category}
@@ -143,14 +143,14 @@ export default function Browse() {
             </div>
 
             {/* Sort and View Controls */}
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 w-full lg:w-auto">
               {/* Sort Dropdown */}
-              <div className="flex items-center space-x-2">
-                <span className="mono-text text-sm text-black/60">SORT:</span>
+              <div className="flex items-center space-x-2 w-full sm:w-auto">
+                <span className="mono-text text-xs sm:text-sm text-black/60 whitespace-nowrap">SORT:</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-white/60 border-brutal border-black rounded-2xl px-4 py-2 mono-text text-xs uppercase tracking-wide outline-none"
+                  className="bg-white/60 border-brutal border-black rounded-2xl px-3 sm:px-4 py-2 mono-text text-xs uppercase tracking-wide outline-none flex-1 sm:flex-none min-w-0"
                 >
                                      <option value="relevance">RELEVANCE</option>
                   <option value="price">PRICE</option>
@@ -160,7 +160,7 @@ export default function Browse() {
               </div>
 
               {/* View Mode Toggle */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 justify-end sm:justify-start">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`p-2 rounded-2xl transition-colors ${
@@ -182,7 +182,7 @@ export default function Browse() {
               {/* Advanced Filters */}
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="btn-brutal-outline flex items-center space-x-2"
+                className="btn-brutal-outline flex items-center space-x-2 text-xs sm:text-sm px-3 sm:px-4 py-2"
               >
                 <SlidersHorizontal className="w-4 h-4" />
                 <span>FILTERS</span>
@@ -198,7 +198,7 @@ export default function Browse() {
               exit={{ opacity: 0, height: 0 }}
               className="mt-6 pt-6 border-t-brutal border-black"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                 <div>
                   <label className="mono-text text-sm text-black/60 mb-2 block">PRICE RANGE</label>
                   <div className="space-y-2">
@@ -272,9 +272,9 @@ export default function Browse() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className={`grid gap-8 ${
+          className={`grid gap-4 sm:gap-6 lg:gap-8 ${
             viewMode === 'grid' 
-              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
+              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
               : 'grid-cols-1'
           }`}
         >

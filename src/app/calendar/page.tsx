@@ -213,7 +213,7 @@ export default function Calendar() {
         transition={{ duration: 0.6 }}
         className="border-b-4 border-black bg-white/90 backdrop-blur-md sticky top-0 z-40"
       >
-        <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
           <div className="flex items-center justify-between">
             <a href="/home" className="flex items-center space-x-3 hover:text-black/60 transition-colors">
               <ArrowLeft className="w-5 h-5" />
@@ -246,7 +246,7 @@ export default function Calendar() {
       >
         <div className="max-w-7xl mx-auto">
           <div className="glass-panel rounded-3xl p-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {/* Search */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-black/40" />
