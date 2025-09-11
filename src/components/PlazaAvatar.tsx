@@ -74,9 +74,9 @@ function AvatarModel({ hue }: AvatarModelProps) {
         setBones(foundBones);
         console.log('Available bones:', Object.keys(foundBones));
 
-        // Set up animation mixer if animations exist
+        // Set up animation mixer if animations exist in the model
         if (object.animations && object.animations.length > 0) {
-          console.log('Found animations:', object.animations.map(anim => anim.name));
+          console.log('Found animations in model:', object.animations.map(anim => anim.name));
           const animationMixer = new THREE.AnimationMixer(object);
           
           // Find idle animation or use the first one
@@ -88,15 +88,56 @@ function AvatarModel({ hue }: AvatarModelProps) {
           ) || object.animations[0];
           
           if (idleAnimation) {
-            console.log('Playing animation:', idleAnimation.name);
+            console.log('Playing model animation:', idleAnimation.name);
             const action = animationMixer.clipAction(idleAnimation);
             action.setLoop(THREE.LoopRepeat, Infinity);
-            action.play();
+            action.setEffectiveWeight(1);
+            action.reset();
+            
+            // Small delay to ensure model is ready
+            setTimeout(() => {
+              action.play();
+              console.log('Animation action started with weight 1');
+            }, 100);
           }
           
           setMixer(animationMixer);
         } else {
-          console.log('No animations found in FBX file');
+          console.log('No animations found in model, loading separate animation file');
+          
+          // Load separate animation file
+          const animLoader = new FBXLoader();
+          animLoader.load(
+            '/models/hueidle.fbx',
+            (animObject) => {
+              console.log('Loaded animation file');
+              
+              if (animObject.animations && animObject.animations.length > 0) {
+                console.log('Found animations in separate file:', animObject.animations.map(anim => anim.name));
+                
+                const animationMixer = new THREE.AnimationMixer(object);
+                const idleAnimation = animObject.animations[0]; // Use first animation from the file
+                
+                console.log('Playing separate animation:', idleAnimation.name);
+                const action = animationMixer.clipAction(idleAnimation);
+                action.setLoop(THREE.LoopRepeat, Infinity);
+                action.setEffectiveWeight(1);
+                action.play();
+                
+                console.log('Animation mixer set with action playing');
+                setMixer(animationMixer);
+              } else {
+                console.log('No animations found in separate file either');
+              }
+            },
+            (progress) => {
+              console.log('Animation loading progress:', (progress.loaded / progress.total * 100) + '%');
+            },
+            (error) => {
+              console.error('Error loading animation file:', error);
+              console.log('Falling back to procedural animation');
+            }
+          );
         }
 
         setFbx(object);
@@ -151,12 +192,14 @@ function AvatarModel({ hue }: AvatarModelProps) {
   useFrame(() => {
     if (mixer) {
       mixer.update(clock.current.getDelta());
+      // If we have a real animation mixer, don't do procedural animations
+      return;
     }
     
     const time = Date.now() * 0.001;
     
-    // Animate specific bones if available
-    if (Object.keys(bones).length > 0) {
+    // Only do procedural bone animation if no real animation is playing
+    if (Object.keys(bones).length > 0 && !mixer) {
       // Chest breathing animation
       if (bones.chest) {
         const breatheIntensity = 0.08;
