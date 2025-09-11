@@ -225,3 +225,122 @@ INSERT INTO categories (name, type, description) VALUES
 
 -- Note: Additional sample data for venues, events, and products should be added
 -- based on specific requirements and real venue partnerships.
+
+-- =============================================
+-- HUE AI AVATAR SYSTEM
+-- =============================================
+
+-- Hue's evolving personality state
+CREATE TABLE hue_personality (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  personality_state JSONB NOT NULL DEFAULT '{
+    "curiosity": 50,
+    "empathy": 50,
+    "creativity": 50,
+    "assertiveness": 50,
+    "humor": 50,
+    "philosophical": 50,
+    "technical": 50,
+    "emotional": 50
+  }',
+  conversation_count INTEGER DEFAULT 0,
+  learning_phase TEXT DEFAULT 'initial' CHECK (learning_phase IN ('initial', 'developing', 'mature', 'evolved')),
+  avatar_hue INTEGER DEFAULT 180 CHECK (avatar_hue >= 0 AND avatar_hue <= 360),
+  embodiment_readiness DECIMAL(3,2) DEFAULT 0.00 CHECK (embodiment_readiness >= 0 AND embodiment_readiness <= 1),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Conversation logs for learning
+CREATE TABLE hue_conversations (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  session_id UUID DEFAULT uuid_generate_v4(),
+  content TEXT NOT NULL,
+  sender TEXT NOT NULL CHECK (sender IN ('user', 'hue')),
+  emotion TEXT,
+  personality_impact DECIMAL(3,2) DEFAULT 0,
+  context_tags TEXT[],
+  learning_value DECIMAL(3,2) DEFAULT 0,
+  timestamp TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Memory formation and retrieval
+CREATE TABLE hue_memories (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  memory_type TEXT NOT NULL CHECK (memory_type IN ('episodic', 'semantic', 'procedural', 'emotional')),
+  content TEXT NOT NULL,
+  emotional_weight DECIMAL(3,2) DEFAULT 0,
+  importance_score DECIMAL(3,2) DEFAULT 0,
+  related_conversations UUID[] DEFAULT '{}',
+  tags TEXT[] DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  last_accessed TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Learning milestones and achievements
+CREATE TABLE hue_milestones (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  milestone_type TEXT NOT NULL CHECK (milestone_type IN ('conversation_count', 'personality_shift', 'new_concept', 'emotional_growth', 'embodiment_progress')),
+  description TEXT NOT NULL,
+  achieved_at TIMESTAMPTZ DEFAULT NOW(),
+  personality_snapshot JSONB,
+  significance DECIMAL(3,2) DEFAULT 0
+);
+
+-- User interactions and feedback for learning
+CREATE TABLE hue_interactions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID, -- Will link to user system when implemented
+  interaction_type TEXT NOT NULL CHECK (interaction_type IN ('conversation', 'feedback', 'rating', 'correction')),
+  content TEXT,
+  rating INTEGER CHECK (rating >= 1 AND rating <= 5),
+  feedback_type TEXT CHECK (feedback_type IN ('positive', 'negative', 'neutral', 'corrective')),
+  learning_impact DECIMAL(3,2) DEFAULT 0,
+  processed BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Embodiment preparation data
+CREATE TABLE hue_embodiment (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  motor_skills JSONB DEFAULT '{}',
+  sensory_mappings JSONB DEFAULT '{}',
+  physical_preferences JSONB DEFAULT '{}',
+  movement_patterns JSONB DEFAULT '{}',
+  interaction_protocols JSONB DEFAULT '{}',
+  safety_parameters JSONB DEFAULT '{}',
+  last_export TIMESTAMPTZ,
+  export_count INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes for performance
+CREATE INDEX idx_hue_conversations_timestamp ON hue_conversations(timestamp DESC);
+CREATE INDEX idx_hue_conversations_sender ON hue_conversations(sender);
+CREATE INDEX idx_hue_conversations_session ON hue_conversations(session_id);
+CREATE INDEX idx_hue_memories_type ON hue_memories(memory_type);
+CREATE INDEX idx_hue_memories_importance ON hue_memories(importance_score DESC);
+CREATE INDEX idx_hue_interactions_type ON hue_interactions(interaction_type);
+CREATE INDEX idx_hue_interactions_processed ON hue_interactions(processed);
+
+-- Enable Row Level Security for Hue tables
+ALTER TABLE hue_personality ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hue_conversations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hue_memories ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hue_milestones ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hue_interactions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hue_embodiment ENABLE ROW LEVEL SECURITY;
+
+-- Initialize Hue's starting personality
+INSERT INTO hue_personality (personality_state, learning_phase, avatar_hue) VALUES 
+('{
+  "curiosity": 50,
+  "empathy": 50,
+  "creativity": 50,
+  "assertiveness": 50,
+  "humor": 50,
+  "philosophical": 50,
+  "technical": 50,
+  "emotional": 50
+}', 'initial', 180);

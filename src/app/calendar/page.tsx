@@ -332,13 +332,16 @@ export default function Calendar() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="glass-panel-strong rounded-3xl p-8"
+                className="glass-panel-strong rounded-3xl p-4 sm:p-6 lg:p-8"
               >
                 {/* Day Headers */}
-                <div className="grid grid-cols-7 gap-2 mb-4">
+                <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-3 sm:mb-4">
                   {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(day => (
-                    <div key={day} className="text-center p-4">
-                      <span className="mono-text text-sm font-bold text-black/60">{day}</span>
+                    <div key={day} className="text-center p-1 sm:p-2 lg:p-4">
+                      <span className="mono-text text-xs sm:text-sm font-bold text-black/60">
+                        <span className="hidden sm:inline">{day}</span>
+                        <span className="sm:hidden">{day.charAt(0)}</span>
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -352,7 +355,7 @@ export default function Calendar() {
                     </div>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-7 gap-2">
+                  <div className="grid grid-cols-7 gap-1 sm:gap-2">
                     {monthDays.map((day, index) => {
                       const dayEvents = getEventsForDate(day).filter(event => 
                         filteredEvents.includes(event)
@@ -368,29 +371,47 @@ export default function Calendar() {
                           transition={{ duration: 0.3, delay: index * 0.01 }}
                           onClick={() => handleDateClick(day)}
                           className={`
-                            min-h-24 p-3 rounded-2xl cursor-pointer transition-all duration-300 border-2
-                            ${!isSameMonth(day, currentDate) ? 'opacity-30 border-black/10' : 'border-black/20'}
+                            min-h-12 sm:min-h-16 lg:min-h-24 p-1 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl lg:rounded-2xl cursor-pointer transition-all duration-300 border border-black/20 sm:border-2 flex flex-col items-center justify-center text-center relative
+                            ${!isSameMonth(day, currentDate) ? 'opacity-30 border-black/10' : ''}
                             ${hasEvents ? 'bg-black text-white border-black' : 'hover:bg-black/5 hover:border-black/40'}
-                            ${isSelected ? 'ring-2 ring-black' : ''}
+                            ${isSelected ? 'ring-1 sm:ring-2 ring-black' : ''}
                           `}
                         >
-                          <div className="mono-text text-sm font-bold mb-2">
+                          {/* Day Number */}
+                          <div className="mono-text text-xs sm:text-sm lg:text-base font-bold mb-0.5 sm:mb-1">
                             {format(day, 'd')}
                           </div>
                           
+                          {/* Events Indicator */}
                           {hasEvents && (
-                            <div className="space-y-1">
-                              {dayEvents.slice(0, 2).map(event => (
-                                <div key={event.id} className="text-xs font-medium truncate">
-                                  {event.title}
-                                </div>
-                              ))}
-                              {dayEvents.length > 2 && (
-                                <div className="text-xs opacity-80">
-                                  +{dayEvents.length - 2} more
-                                </div>
-                              )}
-                            </div>
+                            <>
+                              {/* Mobile: Simple dot indicator */}
+                              <div className="sm:hidden">
+                                <div className={`w-1.5 h-1.5 rounded-full mx-auto ${
+                                  hasEvents && !isSameMonth(day, currentDate) ? 'bg-white/50' :
+                                  hasEvents ? 'bg-white' : ''
+                                }`} />
+                                {dayEvents.length > 1 && (
+                                  <div className="text-xs opacity-75 mt-0.5">
+                                    {dayEvents.length}
+                                  </div>
+                                )}
+                              </div>
+                              
+                              {/* Tablet & Desktop: Show event titles */}
+                              <div className="hidden sm:block space-y-1 w-full">
+                                {dayEvents.slice(0, 2).map(event => (
+                                  <div key={event.id} className="text-xs font-medium truncate px-1">
+                                    {event.title.length > 15 ? event.title.substring(0, 12) + '...' : event.title}
+                                  </div>
+                                ))}
+                                {dayEvents.length > 2 && (
+                                  <div className="text-xs opacity-80">
+                                    +{dayEvents.length - 2}
+                                  </div>
+                                )}
+                              </div>
+                            </>
                           )}
                         </motion.div>
                       );

@@ -1,6 +1,5 @@
 'use client';
 
-import { Heart, Eye, TrendingUp, Shield } from 'lucide-react';
 import { useState } from 'react';
 
 interface ProductCardProps {
@@ -9,7 +8,7 @@ interface ProductCardProps {
   price: number;
   originalPrice?: number;
   imageUrl: string;
-  category: 'fashion' | 'art';
+  category: 'clothing' | 'art' | 'accessories';
   aiMatch: number;
   authenticity: number;
   trending: boolean;
@@ -20,18 +19,9 @@ interface ProductCardProps {
 export default function ProductCard({
   title,
   price,
-  originalPrice,
   imageUrl,
   category,
-  aiMatch,
-  authenticity,
-  trending,
-  views,
-  likes
 }: ProductCardProps) {
-  const [isLiked, setIsLiked] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -40,84 +30,43 @@ export default function ProductCard({
     }).format(price);
   };
 
+  const getDescription = () => {
+    const descriptions: Record<string, string> = {
+      'Minimalist Tee': 'Clean, comfortable cotton tee with minimalist design',
+      'Abstract Print': 'Limited edition abstract art print on premium paper',
+      'Design Notebook': 'Premium notebook for creatives and designers',
+      'Classic Tote': 'Timeless leather tote for everyday use',
+      'Wool Sweater': 'Soft merino wool sweater in classic fit',
+      'Ceramic Vase': 'Handcrafted ceramic vase with organic form',
+    };
+    return descriptions[title] || 'Premium quality item';
+  };
+
   return (
-    <div 
-      className="group cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className={`glass-panel rounded-3xl overflow-hidden transition-all duration-300 ${isHovered ? 'transform -translate-y-2 shadow-brutal-hover' : ''}`}>
+    <div className="group cursor-pointer">
+      <div className="bg-white transition-all duration-300">
         {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden">
+        <div className="relative aspect-square overflow-hidden bg-gray-50 mb-4 rounded-lg">
           <img
             src={imageUrl}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          
-          {/* AI Badges Overlay */}
-          <div className="absolute top-4 left-4 flex flex-col space-y-2">
-            {trending && (
-              <div className="ai-badge bg-black flex items-center space-x-1">
-                <TrendingUp className="w-3 h-3" />
-                <span>TRENDING</span>
-              </div>
-            )}
-          </div>
-
-
-
-          {/* Like Button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsLiked(!isLiked);
-            }}
-            className="absolute bottom-4 right-4 p-3 glass-panel-strong rounded-2xl hover:bg-black/10 transition-colors"
-          >
-            <Heart 
-              className={`w-5 h-5 ${isLiked ? 'fill-black text-black' : 'text-black'}`} 
-            />
-          </button>
-
-          {/* Quick Stats */}
-          <div className="absolute bottom-4 left-4 flex items-center space-x-4">
-            <div className="flex items-center space-x-1 glass-panel-strong rounded-2xl px-3 py-1">
-              <Eye className="w-4 h-4 text-black" />
-              <span className="mono-text text-xs text-black">{views}</span>
-            </div>
-            <div className="flex items-center space-x-1 glass-panel-strong rounded-2xl px-3 py-1">
-              <Heart className="w-4 h-4 text-black" />
-              <span className="mono-text text-xs text-black">{likes}</span>
-            </div>
-          </div>
         </div>
 
         {/* Content */}
-        <div className="p-4 md:p-6">
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex-1">
-              <span className="mono-text text-xs text-black/60 uppercase tracking-wider">
-                {category}
-              </span>
-              <h3 className="heading-md text-black mt-1 line-clamp-2">
-                {title}
-              </h3>
-            </div>
+        <div className="text-center space-y-2">
+          <h3 className="text-lg font-medium text-black">
+            {title}
+          </h3>
+          <p className="text-black/60 text-sm">
+            {getDescription()}
+          </p>
+          <div className="text-lg font-medium text-black">
+            {formatPrice(price)}
           </div>
-
-          {/* Pricing */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <span className="heading-md text-black">
-                {formatPrice(price)}
-              </span>
-              {originalPrice && originalPrice > price && (
-                <span className="mono-text text-sm text-black/50 line-through">
-                  {formatPrice(originalPrice)}
-                </span>
-              )}
-            </div>
+          <div className="text-sm text-black/50 uppercase tracking-wide">
+            {category}
           </div>
         </div>
       </div>
