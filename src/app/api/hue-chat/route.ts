@@ -2,16 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
+// Initialize OpenAI client conditionally
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-});
+}) : null;
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-);
+// Initialize Supabase client conditionally
+const supabase = (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) ? 
+  createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  ) : null;
 
 interface PersonalityState {
   curiosity: number;
@@ -36,7 +37,7 @@ export async function POST(request: NextRequest) {
   try {
     const { message, personality, conversationHistory } = await request.json();
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!openai) {
       return NextResponse.json(
         { error: 'OpenAI API key not configured' },
         { status: 500 }
@@ -128,6 +129,14 @@ function formatConversationHistory(history: Message[]): Array<{role: 'user' | 'a
 
 async function analyzeConversation(userMessage: string, hueResponse: string, personality: PersonalityState) {
   try {
+    if (!openai) {
+      return {
+        emotion: 'curious',
+        personalityChanges: { curiosity: 1 },
+        learningValue: 0.1
+      };
+    }
+
     const analysisPrompt = `Analyze this conversation exchange for emotional content and learning potential:
 
 User: "${userMessage}"
@@ -175,7 +184,7 @@ Consider:
 
 async function storeMemory(userMessage: string, hueResponse: string, analysis: any) {
   try {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return;
+    if (!supabase) return;
 
     // Determine memory type based on content
     let memoryType = 'episodic';
