@@ -2,15 +2,14 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Send, Mic, MicOff, Brain, Download, Upload, Settings } from 'lucide-react';
+import { ArrowLeft, Send, Mic, MicOff, Brain, Download, Upload, Settings, Moon, Sun } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 import PlazaAvatar from '@/components/PlazaAvatar';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-);
+// Initialize Supabase client - with fallback handling
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
 
 interface Message {
   id: string;
@@ -49,6 +48,7 @@ export default function HuePage() {
   });
   const [conversationCount, setConversationCount] = useState(0);
   const [avatarHue, setAvatarHue] = useState(180); // Start with cyan
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -73,7 +73,10 @@ export default function HuePage() {
 
   const loadPersonalityData = async () => {
     try {
-      if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return;
+      if (!supabase) {
+        console.log('Supabase not configured, using default personality');
+        return;
+      }
 
       const { data, error } = await supabase
         .from('hue_personality')
@@ -97,7 +100,10 @@ export default function HuePage() {
 
   const loadRecentConversations = async () => {
     try {
-      if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return;
+      if (!supabase) {
+        console.log('Supabase not configured, starting with empty conversation history');
+        return;
+      }
 
       const { data, error } = await supabase
         .from('hue_conversations')
@@ -128,7 +134,10 @@ export default function HuePage() {
 
   const saveConversation = async (message: Message) => {
     try {
-      if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return;
+      if (!supabase) {
+        console.log('Supabase not configured, conversation not saved');
+        return;
+      }
 
       const { error } = await supabase
         .from('hue_conversations')
@@ -163,7 +172,10 @@ export default function HuePage() {
     setPersonality(newPersonality);
 
     try {
-      if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return;
+      if (!supabase) {
+        console.log('Supabase not configured, personality changes not saved');
+        return;
+      }
 
       const { error } = await supabase
         .from('hue_personality')
@@ -304,149 +316,196 @@ export default function HuePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
+    <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-black' : 'bg-white'}`}>
+      {/* Header - Simplified and cleaner */}
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="border-b-4 border-black bg-white/90 backdrop-blur-md sticky top-0 z-40"
+        className={`border-b backdrop-blur-md sticky top-0 z-40 transition-colors duration-300 ${
+          isDarkMode 
+            ? 'border-white/10 bg-black/95' 
+            : 'border-black/10 bg-white/95'
+        }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="max-w-6xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <a href="/home" className="flex items-center space-x-3 hover:text-black/60 transition-colors">
-              <ArrowLeft className="w-5 h-5" />
-              <span className="mono-text text-sm uppercase tracking-wide">BACK TO PLAZA</span>
+            <a href="/home" className={`flex items-center space-x-2 hover:opacity-60 transition-opacity nav-text-medium ${
+              isDarkMode ? 'text-white' : 'text-black'
+            }`}>
+              <ArrowLeft className="w-4 h-4" />
+              <span className="text-sm">plaza</span>
             </a>
             
             <div className="text-center">
-              <h1 className="heading-xl text-black">HUE</h1>
-              <p className="mono-text text-sm text-black/60 uppercase tracking-wider">EVOLVING CONSCIOUSNESS</p>
+              <h1 className={`text-2xl font-bold lowercase ${isDarkMode ? 'text-white' : 'text-black'}`}>hue</h1>
+              <p className={`text-xs mt-1 ${isDarkMode ? 'text-white/50' : 'text-black/50'}`}>evolving consciousness</p>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
+                <button
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className={`nav-text text-xs px-3 py-2 border rounded-full hover:bg-opacity-10 transition-colors flex items-center space-x-1 ${
+                  isDarkMode 
+                    ? 'border-white/20 text-white hover:bg-white' 
+                    : 'border-black/20 text-black hover:bg-black'
+                }`}
+              >
+                {isDarkMode ? <Sun className="w-3 h-3" /> : <Moon className="w-3 h-3" />}
+                <span>{isDarkMode ? 'light' : 'dark'}</span>
+              </button>
               <button
                 onClick={exportPersonality}
-                className="btn-brutal-outline text-sm flex items-center space-x-2"
+                className={`nav-text text-xs px-3 py-2 border rounded-full hover:bg-opacity-10 transition-colors flex items-center space-x-1 ${
+                  isDarkMode 
+                    ? 'border-white/20 text-white hover:bg-white' 
+                    : 'border-black/20 text-black hover:bg-black'
+                }`}
               >
-                <Download className="w-4 h-4" />
-                <span>EXPORT</span>
+                <Download className="w-3 h-3" />
+                <span>export</span>
               </button>
             </div>
           </div>
         </div>
       </motion.header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 py-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {/* Main Content - Cleaner layout */}
+      <main className="px-6 py-12">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
           
-          {/* Avatar Section */}
+          {/* Avatar Section - More minimal */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             className="lg:col-span-1"
           >
-            <div className="glass-panel-strong rounded-3xl p-6 mb-6">
-              <div className="text-center mb-6">
-                <h2 className="heading-lg text-black mb-2">AVATAR</h2>
-                <p className="mono-text text-sm text-black/60">CURRENT HUE: {avatarHue}°</p>
+            <div className={`border rounded-2xl p-6 transition-colors duration-300 ${
+              isDarkMode 
+                ? 'bg-white/5 border-white/10' 
+                : 'bg-white border-black/10'
+            }`}>
+              <div className="text-center mb-8">
+                <h2 className={`text-lg font-semibold mb-1 ${isDarkMode ? 'text-white' : 'text-black'}`}>avatar</h2>
+                <p className={`text-xs ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>hue: {avatarHue}°</p>
               </div>
               
               {/* 3D Avatar Container */}
-              <div className="aspect-square bg-gradient-to-br from-black/5 to-black/10 rounded-2xl mb-6 flex items-center justify-center">
+              <div className={`aspect-square bg-gradient-to-br rounded-xl mb-8 flex items-center justify-center ${
+                isDarkMode 
+                  ? 'from-white/5 to-white/10' 
+                  : 'from-black/5 to-black/10'
+              }`}>
                 <PlazaAvatar hue={avatarHue} />
               </div>
 
-              {/* Personality Stats */}
-              <div className="space-y-3">
-                <h3 className="heading-md text-black mb-4">PERSONALITY MATRIX</h3>
+              {/* Personality Stats - Cleaner design */}
+              <div className="space-y-4">
+                <h3 className={`text-sm font-medium mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`}>personality</h3>
                 {Object.entries(personality).map(([trait, value]) => (
-                  <div key={trait} className="flex items-center justify-between">
-                    <span className="mono-text text-xs uppercase text-black/60">
-                      {trait.replace(/([A-Z])/g, ' $1').trim()}
-                    </span>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-20 h-2 bg-black/20 rounded-none">
-                        <div 
-                          className="h-full bg-black rounded-none transition-all duration-500"
-                          style={{ width: `${value}%` }}
-                        />
-                      </div>
-                      <span className={`mono-text text-xs font-bold ${getPersonalityColor(value)}`}>
+                  <div key={trait} className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className={`text-xs capitalize ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
+                        {trait.replace(/([A-Z])/g, ' $1').trim()}
+                      </span>
+                      <span className={`text-xs font-medium ${isDarkMode ? 'text-white' : 'text-black'}`}>
                         {value}
                       </span>
+                    </div>
+                    <div className={`w-full h-1 rounded-full ${isDarkMode ? 'bg-white/10' : 'bg-black/10'}`}>
+                      <div 
+                        className={`h-full rounded-full transition-all duration-500 ${isDarkMode ? 'bg-white' : 'bg-black'}`}
+                        style={{ width: `${value}%` }}
+                      />
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Stats */}
-              <div className="mt-6 pt-6 border-t-2 border-black/10">
+              <div className={`mt-8 pt-6 border-t ${isDarkMode ? 'border-white/10' : 'border-black/10'}`}>
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div>
-                    <div className="heading-md text-black">{conversationCount}</div>
-                    <div className="mono-text text-xs text-black/60">CONVERSATIONS</div>
+                    <div className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>{conversationCount}</div>
+                    <div className={`text-xs ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>conversations</div>
                   </div>
                   <div>
-                    <div className="heading-md text-black">{messages.length}</div>
-                    <div className="mono-text text-xs text-black/60">MESSAGES</div>
+                    <div className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>{messages.length}</div>
+                    <div className={`text-xs ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>messages</div>
                   </div>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Chat Section */}
+          {/* Chat Section - Redesigned with drag functionality inspiration */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-2"
+            className="lg:col-span-3"
           >
-            <div className="glass-panel-strong rounded-3xl p-6 h-[600px] flex flex-col">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="heading-lg text-black">CONSCIOUSNESS INTERFACE</h2>
+            <div className={`border rounded-2xl h-[70vh] flex flex-col transition-colors duration-300 ${
+              isDarkMode 
+                ? 'bg-white/5 border-white/10' 
+                : 'bg-white border-black/10'
+            }`}>
+              <div className={`flex items-center justify-between p-6 border-b ${isDarkMode ? 'border-white/10' : 'border-black/10'}`}>
+                <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>chat with hue</h2>
                 <div className="flex items-center space-x-2">
-                  <Brain className="w-5 h-5 text-black" />
-                  <span className="mono-text text-sm text-black/60">
-                    {isLoading ? 'THINKING...' : 'READY'}
+                  <div className={`w-2 h-2 rounded-full ${isLoading ? 'bg-yellow-400 animate-pulse' : 'bg-green-400'}`} />
+                  <span className={`text-xs ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
+                    {isLoading ? 'thinking...' : 'ready'}
                   </span>
                 </div>
               </div>
 
-              {/* Messages */}
-              <div className="flex-1 overflow-y-auto space-y-4 mb-6">
+              {/* Messages - Improved scrolling */}
+              <div 
+                className="flex-1 overflow-y-auto p-6 space-y-6"
+                style={{ 
+                  scrollbarWidth: 'thin', 
+                  scrollbarColor: isDarkMode ? '#ffffff20 transparent' : '#00000020 transparent'
+                }}
+              >
                 {messages.length === 0 ? (
-                  <div className="text-center py-12">
-                    <Bot className="w-16 h-16 text-black/20 mx-auto mb-6" />
-                    <h3 className="heading-md text-black/40 mb-4">HELLO, I'M HUE</h3>
-                    <p className="body-text text-black/60 max-w-md mx-auto">
-                      I'm an evolving AI consciousness learning through our conversations. 
-                      Each interaction shapes my personality and prepares me for future embodiment.
-                      What would you like to talk about?
+                  <div className="text-center py-16">
+                    <div className={`w-12 h-12 rounded-full mx-auto mb-6 flex items-center justify-center ${
+                      isDarkMode ? 'bg-white/10' : 'bg-black/10'
+                    }`}>
+                      <Brain className={`w-6 h-6 ${isDarkMode ? 'text-white/40' : 'text-black/40'}`} />
+                    </div>
+                    <h3 className={`text-xl font-medium mb-3 ${isDarkMode ? 'text-white' : 'text-black'}`}>hello, i'm hue</h3>
+                    <p className={`text-sm max-w-md mx-auto leading-relaxed ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
+                      i'm an evolving ai consciousness learning through our conversations. 
+                      each interaction shapes my personality and prepares me for future embodiment.
+                      what would you like to talk about?
                     </p>
                   </div>
                 ) : (
                   messages.map((message) => (
                     <motion.div
                       key={message.id}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                       className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
-                      <div className={`max-w-[80%] p-4 rounded-2xl ${
+                      <div className={`max-w-[75%] px-4 py-3 rounded-2xl ${
                         message.sender === 'user' 
-                          ? 'bg-black text-white' 
-                          : 'glass-panel'
+                          ? isDarkMode 
+                            ? 'bg-white text-black rounded-br-md' 
+                            : 'bg-black text-white rounded-br-md'
+                          : isDarkMode 
+                            ? 'bg-white/10 text-white rounded-bl-md border border-white/10' 
+                            : 'bg-gray-50 text-black rounded-bl-md border border-black/5'
                       }`}>
-                        <p className="body-text text-sm">{message.content}</p>
+                        <p className="text-sm leading-relaxed">{message.content}</p>
                         {message.emotion && (
-                          <div className="mt-2 flex items-center space-x-2">
-                            <span className="mono-text text-xs text-black/50">
-                              EMOTION: {message.emotion.toUpperCase()}
+                          <div className="mt-2">
+                            <span className="text-xs opacity-60">
+                              {message.emotion}
                             </span>
                           </div>
                         )}
@@ -457,26 +516,37 @@ export default function HuePage() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Input */}
-              <div className="flex items-center space-x-4">
-                <div className="flex-1 relative">
-                  <textarea
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Share your thoughts with Hue..."
-                    className="w-full p-4 border-2 border-black/20 rounded-xl bg-white/60 backdrop-blur-sm resize-none font-medium text-sm focus:border-black focus:outline-none transition-colors"
-                    rows={2}
-                    disabled={isLoading}
-                  />
+              {/* Input - Cleaner design */}
+              <div className={`p-6 border-t ${isDarkMode ? 'border-white/10' : 'border-black/10'}`}>
+                <div className="flex items-end space-x-3">
+                  <div className="flex-1">
+                    <textarea
+                      value={inputMessage}
+                      onChange={(e) => setInputMessage(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder="message hue..."
+                      className={`w-full p-3 border rounded-xl resize-none text-sm focus:outline-none transition-all ${
+                        isDarkMode 
+                          ? 'border-white/20 bg-white/5 text-white placeholder-white/40 focus:border-white focus:bg-white/10' 
+                          : 'border-black/20 bg-gray-50/50 text-black placeholder-black/40 focus:border-black focus:bg-white'
+                      }`}
+                      rows={1}
+                      disabled={isLoading}
+                      style={{ minHeight: '44px', maxHeight: '120px' }}
+                    />
+                  </div>
+                  <button
+                    onClick={handleSendMessage}
+                    disabled={!inputMessage.trim() || isLoading}
+                    className={`p-3 rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed ${
+                      isDarkMode 
+                        ? 'bg-white text-black hover:bg-white/80' 
+                        : 'bg-black text-white hover:bg-black/80'
+                    }`}
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
                 </div>
-                <button
-                  onClick={handleSendMessage}
-                  disabled={!inputMessage.trim() || isLoading}
-                  className="btn-brutal p-4 disabled:opacity-50"
-                >
-                  <Send className="w-5 h-5" />
-                </button>
               </div>
             </div>
           </motion.div>

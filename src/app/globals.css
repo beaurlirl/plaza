@@ -84,7 +84,8 @@ body {
   box-shadow: var(--shadow-brutal);
 }
 
-/* Brutalist Typography */
+/* Plaza Typography System */
+/* Primary Font: Union Helvetica - Headlines and main content */
 .heading-xl {
   font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-weight: 400;
@@ -116,9 +117,29 @@ body {
   line-height: 1.6;
 }
 
+/* Secondary Font: JetBrains Mono - Technical and data elements */
 .mono-text {
   font-family: 'JetBrains Mono', monospace;
   font-weight: 400;
+}
+
+/* Tertiary Font: Space Grotesk - Navigation and UI elements */
+.nav-text {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.nav-text-medium {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.nav-text-bold {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 /* Brutalist Buttons */

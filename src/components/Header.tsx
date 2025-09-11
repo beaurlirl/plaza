@@ -16,7 +16,7 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <a href="/" className="hover:opacity-70 transition-opacity">
-              <h1 className="heading-lg text-black lowercase">plaza</h1>
+              <h1 className="text-2xl font-bold text-black lowercase nav-text-bold">plaza</h1>
             </a>
           </div>
 
@@ -32,7 +32,7 @@ export default function Header() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setIsSearchFocused(true)}
                   onBlur={() => setIsSearchFocused(false)}
-                  className="flex-1 bg-transparent border-none outline-none text-black placeholder-black/60 font-union font-medium text-sm uppercase tracking-wide"
+                  className="flex-1 bg-transparent border-none outline-none text-black placeholder-black/60 nav-text-medium text-sm uppercase tracking-wide"
                 />
                 <button className="p-2 hover:bg-black/5 rounded-2xl transition-colors">
                   <Upload className="w-5 h-5 text-black" />
@@ -63,13 +63,13 @@ export default function Header() {
 
           {/* Tablet Navigation (md to lg) */}
           <nav className="hidden md:flex lg:hidden items-center space-x-2">
-            <a href="/browse" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-xs px-2 py-1">
+            <a href="/browse" className="nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-xs px-2 py-1">
               BROWSE
             </a>
-            <a href="/sell" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-xs px-2 py-1">
+            <a href="/sell" className="nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-xs px-2 py-1">
               SELL
             </a>
-            <a href="/tools" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-xs px-2 py-1">
+            <a href="/tools" className="nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-xs px-2 py-1">
               TOOLS
             </a>
             <button className="p-2 hover:bg-black/5 rounded-2xl transition-colors">
@@ -82,16 +82,16 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
-            <a href="/browse" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm">
+            <a href="/browse" className="nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm">
               BROWSE
             </a>
-            <a href="/sell" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm">
+            <a href="/sell" className="nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm">
               SELL
             </a>
-            <a href="/tools" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm">
+            <a href="/tools" className="nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm">
               TOOLS
             </a>
-            <a href="/calendar" className="body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm">
+            <a href="/calendar" className="nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm">
               CALENDAR
             </a>
             <button className="p-3 hover:bg-black/5 rounded-2xl transition-colors">
@@ -145,20 +145,20 @@ export default function Header() {
         {showMobileMenu && (
           <div className="md:hidden border-t-brutal border-black max-h-[calc(100vh-80px)] overflow-y-auto">
             <nav className="p-3 sm:p-4 space-y-2 sm:space-y-4">
-              <a href="/browse" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
+              <a href="/browse" className="block nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
                 BROWSE
               </a>
-              <a href="/sell" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
+              <a href="/sell" className="block nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
                 SELL
               </a>
-              <a href="/tools" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
+              <a href="/tools" className="block nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
                 TOOLS
               </a>
-              <a href="/calendar" className="block body-text font-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
+              <a href="/calendar" className="block nav-text-medium uppercase tracking-wide hover:text-black/60 transition-colors text-sm py-2 sm:py-3 min-h-[44px] flex items-center">
                 CALENDAR
               </a>
               <div className="pt-2 sm:pt-4 border-t border-black/20">
-                <button className="flex items-center space-x-3 body-text font-medium uppercase tracking-wide text-sm py-2 sm:py-3 min-h-[44px] w-full">
+                <button className="flex items-center space-x-3 nav-text-medium uppercase tracking-wide text-sm py-2 sm:py-3 min-h-[44px] w-full">
                   <User className="w-5 h-5 text-black" />
                   <span>PROFILE</span>
                 </button>

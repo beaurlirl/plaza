@@ -73,8 +73,8 @@ export default function HomePage() {
         className="px-4 sm:px-6 py-6 sm:py-8 border-b-4 border-black"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-normal lowercase text-black">plaza</h1>
-          <div className="text-xs sm:text-sm font-medium uppercase tracking-wider text-black/60">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold lowercase text-black nav-text-bold">plaza</h1>
+          <div className="text-xs sm:text-sm nav-text-medium uppercase tracking-wider text-black/60">
             DIGITAL HUB
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function HomePage() {
                     }`}>
                       {pillar.title}
                     </h3>
-                    <p className={`font-medium text-sm uppercase tracking-wider transition-colors duration-300 ${
+                    <p className={`nav-text-medium text-sm uppercase tracking-wider transition-colors duration-300 ${
                       selectedPillar === pillar.id ? 'text-white/80' : 'text-black/60'
                     }`}>
                       {pillar.subtitle}
@@ -150,7 +150,7 @@ export default function HomePage() {
                       {pillar.description}
                     </p>
                     
-                    <div className={`inline-flex items-center space-x-2 font-medium uppercase tracking-wider transition-colors duration-300 ${
+                    <div className={`inline-flex items-center space-x-2 nav-text-medium uppercase tracking-wider transition-colors duration-300 ${
                       selectedPillar === pillar.id ? 'text-white' : 'text-black'
                     }`}>
                       <span>EXPLORE</span>

@@ -15,6 +15,7 @@ function AvatarModel({ hue }: AvatarModelProps) {
   const meshRef = useRef<THREE.Group>(null);
   const [fbx, setFbx] = useState<THREE.Group | null>(null);
   const [mixer, setMixer] = useState<THREE.AnimationMixer | null>(null);
+  const [bones, setBones] = useState<{[key: string]: THREE.Bone}>({});
   const clock = useRef(new THREE.Clock());
 
   useEffect(() => {
@@ -22,13 +23,15 @@ function AvatarModel({ hue }: AvatarModelProps) {
     
     // Load your FBX file - update the path to where you place your FBX file
     loader.load(
-      '/models/hue-avatar.fbx', // Place your FBX file in public/models/
+      '/models/hue.fbx', // Place your FBX file in public/models/
       (object) => {
         // Scale and position the model
         object.scale.setScalar(0.01); // Adjust scale as needed
         object.position.set(0, -1, 0); // Adjust position as needed
         
-        // Set up materials with hue-based coloring
+        // Set up materials with hue-based coloring and find bones
+        const foundBones: {[key: string]: THREE.Bone} = {};
+        
         object.traverse((child) => {
           if ((child as THREE.Mesh).isMesh) {
             const mesh = child as THREE.Mesh;
@@ -42,25 +45,58 @@ function AvatarModel({ hue }: AvatarModelProps) {
               mesh.material = material;
             }
           }
+          
+          // Find important bones for animation
+          if (child.type === 'Bone') {
+            const bone = child as THREE.Bone;
+            const boneName = bone.name.toLowerCase();
+            
+            // Look for chest/spine bones
+            if (boneName.includes('chest') || boneName.includes('spine') || boneName.includes('torso')) {
+              foundBones.chest = bone;
+              console.log('Found chest bone:', bone.name);
+            }
+            
+            // Look for arm bones
+            if (boneName.includes('arm') || boneName.includes('shoulder')) {
+              if (boneName.includes('left') || boneName.includes('l_')) {
+                foundBones.leftArm = bone;
+                console.log('Found left arm bone:', bone.name);
+              }
+              if (boneName.includes('right') || boneName.includes('r_')) {
+                foundBones.rightArm = bone;
+                console.log('Found right arm bone:', bone.name);
+              }
+            }
+          }
         });
+        
+        setBones(foundBones);
+        console.log('Available bones:', Object.keys(foundBones));
 
         // Set up animation mixer if animations exist
         if (object.animations && object.animations.length > 0) {
+          console.log('Found animations:', object.animations.map(anim => anim.name));
           const animationMixer = new THREE.AnimationMixer(object);
           
           // Find idle animation or use the first one
           const idleAnimation = object.animations.find(anim => 
             anim.name.toLowerCase().includes('idle') || 
             anim.name.toLowerCase().includes('breathing') ||
-            anim.name.toLowerCase().includes('rest')
+            anim.name.toLowerCase().includes('rest') ||
+            anim.name.toLowerCase().includes('stand')
           ) || object.animations[0];
           
           if (idleAnimation) {
+            console.log('Playing animation:', idleAnimation.name);
             const action = animationMixer.clipAction(idleAnimation);
+            action.setLoop(THREE.LoopRepeat, Infinity);
             action.play();
           }
           
           setMixer(animationMixer);
+        } else {
+          console.log('No animations found in FBX file');
         }
 
         setFbx(object);
@@ -117,9 +153,56 @@ function AvatarModel({ hue }: AvatarModelProps) {
       mixer.update(clock.current.getDelta());
     }
     
-    // Gentle rotation for idle movement
-    if (meshRef.current && !mixer) {
-      meshRef.current.rotation.y += 0.005;
+    const time = Date.now() * 0.001;
+    
+    // Animate specific bones if available
+    if (Object.keys(bones).length > 0) {
+      // Chest breathing animation
+      if (bones.chest) {
+        const breatheIntensity = 0.08;
+        const breatheSpeed = 0.8;
+        const breathe = Math.sin(time * breatheSpeed) * breatheIntensity;
+        
+        // Scale chest for breathing effect
+        bones.chest.scale.setScalar(1 + breathe);
+        
+        // Slight forward/back movement for chest pumping
+        bones.chest.position.z = breathe * 0.05;
+      }
+      
+      // Arm swaying animation
+      if (bones.leftArm) {
+        const swaySpeed = 0.6;
+        const swayIntensity = 0.15;
+        const leftSway = Math.sin(time * swaySpeed) * swayIntensity;
+        bones.leftArm.rotation.z = leftSway;
+        bones.leftArm.rotation.x = Math.sin(time * swaySpeed * 0.7) * swayIntensity * 0.5;
+      }
+      
+      if (bones.rightArm) {
+        const swaySpeed = 0.6;
+        const swayIntensity = 0.15;
+        // Right arm sways opposite to left for natural movement
+        const rightSway = Math.sin(time * swaySpeed + Math.PI) * swayIntensity;
+        bones.rightArm.rotation.z = rightSway;
+        bones.rightArm.rotation.x = Math.sin(time * swaySpeed * 0.7 + Math.PI) * swayIntensity * 0.5;
+      }
+      
+      // Gentle overall rotation
+      if (meshRef.current) {
+        meshRef.current.rotation.y += 0.002;
+      }
+    } else {
+      // Fallback animation for models without bones
+      if (meshRef.current && !mixer) {
+        // Slow rotation
+        meshRef.current.rotation.y += 0.003;
+        // Gentle breathing-like scale
+        const breathe = 1 + Math.sin(time * 0.5) * 0.02;
+        meshRef.current.scale.setScalar(0.01 * breathe);
+        // Subtle floating
+        meshRef.current.position.y = -1 + Math.sin(time * 0.3) * 0.1;
+      }
     }
   });
 

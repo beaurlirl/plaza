@@ -15,7 +15,7 @@ export default function RootPage() {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="text-center">
-        <h1 className="text-4xl font-normal lowercase text-black mb-4">plaza</h1>
+        <h1 className="text-4xl font-bold lowercase text-black mb-4 nav-text-bold">plaza</h1>
         <div className="text-sm text-black/60">Loading...</div>
       </div>
     </div>
