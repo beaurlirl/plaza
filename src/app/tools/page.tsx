@@ -19,7 +19,7 @@ export default function Tools() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="heading-xl text-black mb-6">tools</h1>
+          <h1 className="heading-lg text-black mb-6">tools</h1>
           <p className="body-text text-xl text-black/80 max-w-3xl mx-auto">
             creative generators and utilities for digital expression
           </p>

@@ -101,7 +101,7 @@ export default function Browse() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="heading-xl text-black mb-8">market</h1>
+          <h1 className="heading-lg text-black mb-8">market</h1>
         </motion.div>
 
         {/* Simple Category Navigation */}

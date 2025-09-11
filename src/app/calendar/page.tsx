@@ -221,7 +221,7 @@ export default function Calendar() {
             </a>
             
             <div className="text-center">
-              <h1 className="heading-xl text-black">CALENDAR</h1>
+              <h1 className="heading-lg text-black">CALENDAR</h1>
               <p className="mono-text text-sm text-black/60 uppercase tracking-wider">LIVE CITY CULTURE</p>
             </div>
             

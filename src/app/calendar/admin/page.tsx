@@ -309,7 +309,7 @@ export default function CalendarAdmin() {
             </a>
             
             <div className="text-center">
-              <h1 className="heading-xl text-black">CALENDAR ADMIN</h1>
+              <h1 className="heading-lg text-black">CALENDAR ADMIN</h1>
               <p className="mono-text text-sm text-black/60 uppercase tracking-wider">EVENT MANAGEMENT</p>
             </div>
             
