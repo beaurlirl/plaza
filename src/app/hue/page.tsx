@@ -1,17 +1,36 @@
 'use client';
 
-import { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
+import React from 'react';
+import dynamic from 'next/dynamic';
 import { useDarkMode } from '@/hooks/useDarkMode';
-import { HueModel, HueModelFallback } from '@/components/hue/HueModel';
 import { ChatUI } from '@/components/hue/ChatUI';
 import { useChat } from '@/hooks/useChat';
 import Header from '@/components/Header';
 
+// Direct FBX model loader (no React Three Fiber)
+const DirectHueModel = dynamic(() => import('@/components/hue/DirectHueModel'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl animate-pulse flex items-center justify-center">
+      <div className="text-gray-500 text-sm">Loading Hue FBX...</div>
+    </div>
+  )
+});
+
+// Fallback 2D model in case FBX fails
+const SimpleHueModel = dynamic(() => import('@/components/hue/SimpleHueModel'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl animate-pulse flex items-center justify-center">
+      <div className="text-gray-500 text-sm">Loading Hue...</div>
+    </div>
+  )
+});
+
 export default function HuePage() {
   const { isDarkMode } = useDarkMode();
   const { isLoading } = useChat();
+  const [use3D, setUse3D] = React.useState(true);
 
   return (
     <div className="min-h-screen bg-white">
@@ -39,118 +58,21 @@ export default function HuePage() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-          <div className="w-full lg:w-1/2">
-            <div className="bg-white border border-gray-200 rounded-3xl p-8 lg:p-12 shadow-lg">
-              <div className="text-center mb-6">
-                <h2 className="heading-lg text-black mb-2">avatar</h2>
-                <p className="body-text text-black/70">hue: 180°</p>
-              </div>
+          <div className="w-full lg:w-1/2 overflow-visible -ml-20">
+            <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-blue-500 overflow-visible h-[600px] shadow-lg relative">
+              {use3D ? (
+                <DirectHueModel isTalking={isLoading} />
+              ) : (
+                <SimpleHueModel isTalking={isLoading} />
+              )}
               
-              <div className="bg-gray-100 rounded-2xl mb-6 relative h-64 sm:h-80 lg:h-96">
-                <Canvas
-                  camera={{ position: [0, 0, 5], fov: 75 }}
-                  style={{ background: 'transparent' }}
-                  gl={{ 
-                    powerPreference: "high-performance",
-                    antialias: true,
-                    alpha: true,
-                    preserveDrawingBuffer: false
-                  }}
-                >
-                  <Suspense fallback={<HueModelFallback />}>
-                    <HueModel isTalking={isLoading} />
-                  </Suspense>
-                  
-                  {/* Better lighting for visibility */}
-                  <ambientLight intensity={1.2} />
-                  <directionalLight 
-                    position={[10, 10, 5]} 
-                    intensity={1.5} 
-                    castShadow 
-                  />
-                  <pointLight position={[-10, -10, -5]} intensity={0.8} />
-                  <pointLight position={[5, 0, 5]} intensity={0.6} color="#ffffff" />
-                  
-                  {/* Environment */}
-                  <Environment preset="studio" />
-                  
-                  {/* Controls */}
-                  <OrbitControls 
-                    enablePan={false}
-                    enableZoom={true}
-                    minDistance={2}
-                    maxDistance={8}
-                    autoRotate={false}
-                    autoRotateSpeed={0.5}
-                  />
-                </Canvas>
-              </div>
-
-              <div>
-                <h3 className="heading-md text-black mb-4">personality</h3>
-                
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="body-text text-black">Curiosity</span>
-                      <span className="mono-text text-sm font-medium">50</span>
-                      </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-black h-2 rounded-full transition-all duration-500" style={{width: '50%'}}></div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="body-text text-black">Empathy</span>
-                      <span className="mono-text text-sm font-medium">50</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-black h-2 rounded-full transition-all duration-500" style={{width: '50%'}}></div>
-              </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="body-text text-black">Creativity</span>
-                      <span className="mono-text text-sm font-medium">50</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-black h-2 rounded-full transition-all duration-500" style={{width: '50%'}}></div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="body-text text-black">Assertiveness</span>
-                      <span className="mono-text text-sm font-medium">50</span>
-                </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-black h-2 rounded-full transition-all duration-500" style={{width: '50%'}}></div>
-              </div>
-            </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="body-text text-black">Humor</span>
-                      <span className="mono-text text-sm font-medium">50</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-black h-2 rounded-full transition-all duration-500" style={{width: '50%'}}></div>
-                </div>
-              </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="body-text text-black">Philosophical</span>
-                      <span className="mono-text text-sm font-medium">50</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-black h-2 rounded-full transition-all duration-500" style={{width: '50%'}}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {/* Toggle button for testing */}
+              <button
+                onClick={() => setUse3D(!use3D)}
+                className="absolute top-4 right-4 px-3 py-1 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full transition-colors"
+              >
+                {use3D ? '3D' : '2D'}
+              </button>
             </div>
           </div>
 

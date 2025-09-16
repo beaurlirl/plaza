@@ -108,7 +108,7 @@ export default function CalendarAdmin() {
       }
 
       // Fetch venues
-      const { data: venuesData, error: venuesError } = await supabase
+      const { data: venuesData, error: venuesError } = await supabase!
         .from('venues')
         .select('*')
         .order('name');
@@ -121,7 +121,7 @@ export default function CalendarAdmin() {
       }
 
       // Fetch events with venue data
-      const { data: eventsData, error: eventsError } = await supabase
+      const { data: eventsData, error: eventsError } = await supabase!
         .from('events')
         .select(`
           *,
@@ -163,12 +163,12 @@ export default function CalendarAdmin() {
 
       let result;
       if (editingEvent) {
-        result = await supabase
+        result = await supabase!
           .from('events')
           .update(eventData)
           .eq('id', editingEvent.id);
       } else {
-        result = await supabase
+        result = await supabase!
           .from('events')
           .insert([eventData]);
       }
@@ -204,7 +204,7 @@ export default function CalendarAdmin() {
         capacity: Number(venueForm.capacity)
       };
 
-      const { error } = await supabase
+      const { error } = await supabase!
         .from('venues')
         .insert([venueData]);
 
@@ -228,7 +228,7 @@ export default function CalendarAdmin() {
     if (!confirm('Are you sure you want to delete this event?')) return;
 
     try {
-      const { error } = await supabase
+      const { error } = await supabase!
         .from('events')
         .delete()
         .eq('id', eventId);

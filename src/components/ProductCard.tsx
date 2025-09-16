@@ -9,6 +9,8 @@ interface ProductCardProps {
   originalPrice?: number;
   imageUrl: string;
   category: 'clothing' | 'art' | 'accessories';
+  seller?: string;
+  country?: string;
   aiMatch: number;
   authenticity: number;
   trending: boolean;
@@ -21,6 +23,8 @@ export default function ProductCard({
   price,
   imageUrl,
   category,
+  seller,
+  country,
 }: ProductCardProps) {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -65,6 +69,21 @@ export default function ProductCard({
           <div className="text-lg font-medium text-black">
             {formatPrice(price)}
           </div>
+          
+          {/* Seller and Country Info */}
+          <div className="space-y-1">
+            {seller && (
+              <div className="text-xs text-black/50 uppercase tracking-wide">
+                by {seller.replace(/_/g, ' ')}
+              </div>
+            )}
+            {country && (
+              <div className="text-xs text-black/40">
+                Made in {country}
+              </div>
+            )}
+          </div>
+          
           <div className="text-sm text-black/50 uppercase tracking-wide">
             {category}
           </div>

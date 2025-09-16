@@ -27,17 +27,14 @@ export function HueModel({ isTalking = false }: HueModelProps) {
     
     if (fbx && fbxRef.current) {
       try {
-        // Scale and position the model
-        fbxRef.current.scale.setScalar(0.01); // Adjust scale as needed
-        fbxRef.current.position.set(0, -1, 0); // Center and slightly below ground
+        // Scale and position the model to fit the container
+        fbx.scale.setScalar(0.01); // Appropriate scale for the container
+        fbx.position.set(0, -1, 0); // Center in the container
+        fbx.rotation.set(0, 0, 0); // Reset rotation
         
         console.log('HueModel: Model positioned and scaled');
         
         // Set up animations
-        if (mixerRef.current) {
-          mixerRef.current.stopAllAction();
-        }
-        
         mixerRef.current = new THREE.AnimationMixer(fbx);
         
         // Try to use idle animation from separate file first
@@ -57,18 +54,14 @@ export function HueModel({ isTalking = false }: HueModelProps) {
           console.log('HueModel: Using animation from main model');
         }
 
-        // Add the model to the ref
-        fbxRef.current.add(fbx);
         setModelLoaded(true);
-        console.log('HueModel: Model successfully added to scene');
+        console.log('HueModel: Model successfully set up');
       } catch (err) {
         console.error('HueModel: Error setting up model:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
       }
-    } else {
-      console.log('HueModel: FBX or ref not ready yet');
     }
-  }, [fbx, idleAnimation, modelLoaded]);
+  }, [fbx, idleAnimation]);
 
   // Animation loop
   useFrame((state, delta) => {
@@ -124,7 +117,7 @@ export function HueModel({ isTalking = false }: HueModelProps) {
 
   return (
     <group ref={fbxRef}>
-      {/* The FBX model will be added here via useEffect */}
+      {fbx && <primitive object={fbx} />}
     </group>
   );
 }
