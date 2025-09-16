@@ -126,7 +126,7 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
         
         // Ensure materials are properly set up
         object.traverse((child) => {
-          if (child.isMesh) {
+          if ((child as any).isMesh) {
             const mesh = child as THREE.Mesh;
             
             // Enable shadows
