@@ -119,7 +119,7 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
         // Center the model
         object.position.sub(center.multiplyScalar(scale));
         object.position.y -= size.y * scale * 0.1; // Move it up slightly
-        object.position.x -= 0.8; // Move it to the left
+        object.position.x -= 0.77; // Move it to the left (3px right adjustment)
         
         // Face forward
         object.rotation.y = 0;
