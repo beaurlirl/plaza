@@ -187,7 +187,8 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
       },
       (error) => {
         console.error('DirectHueModel: Error loading FBX:', error);
-        setLoadError(`Failed to load FBX model: ${error.message || error}`);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        setLoadError(`Failed to load FBX model: ${errorMessage}`);
         setIsLoading(false);
         
         // Show a fallback 3D shape
