@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { Store, Palette, Calendar, ArrowRight, Bot } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface Pillar {
   id: string;
@@ -11,7 +11,6 @@ interface Pillar {
   subtitle: string;
   description: string;
   href: string;
-  icon: React.ReactNode;
   color: string;
 }
 
@@ -27,7 +26,6 @@ export default function HomePage() {
       subtitle: 'EXPERT-CURATED COMMERCE',
       description: 'Premium fashion and fine art verified by specialists with investment insights and trend analysis',
       href: '/browse',
-      icon: <Store className="w-8 h-8" />,
       color: 'from-black/20 to-black/10'
     },
     {
@@ -36,7 +34,6 @@ export default function HomePage() {
       subtitle: 'CREATIVE TOOLS',
       description: 'Design custom content and personalized items with AI-powered creative tools and generators',
       href: '/tools',
-      icon: <Palette className="w-8 h-8" />,
       color: 'from-black/15 to-black/5'
     },
     {
@@ -45,7 +42,6 @@ export default function HomePage() {
       subtitle: 'LIVE CITY CULTURE',
       description: 'Real-time venue performances and cultural events across major cities with expert curation',
       href: '/calendar',
-      icon: <Calendar className="w-8 h-8" />,
       color: 'from-black/10 to-black/5'
     },
     {
@@ -54,7 +50,6 @@ export default function HomePage() {
       subtitle: 'EVOLVING CONSCIOUSNESS',
       description: 'Meet our AI avatar that learns and evolves through conversations, developing personality and preparing for embodiment',
       href: '/hue',
-      icon: <Bot className="w-8 h-8" />,
       color: 'from-purple/20 to-blue/10'
     }
   ];
@@ -70,10 +65,10 @@ export default function HomePage() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="px-4 sm:px-6 py-6 sm:py-8 border-b-4 border-black"
+        className="px-4 sm:px-6 py-6 sm:py-8 border-b border-black"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold lowercase text-black nav-text-bold">plaza</h1>
+          <h1 className="text-lg sm:text-xl lg:text-2xl font-light lowercase text-black nav-text">plaza</h1>
           <div className="text-xs sm:text-sm nav-text-medium uppercase tracking-wider text-black/60">
             DIGITAL HUB
           </div>
@@ -92,12 +87,10 @@ export default function HomePage() {
             className="text-center mb-20"
           >
             <h2 className="heading-lg text-black mb-4 sm:mb-6">
-              CHOOSE YOUR EXPERIENCE
+              ENTER THE SPACE
             </h2>
-            <p className="body-text text-base sm:text-lg lg:text-xl text-black/70 max-w-3xl mx-auto">
-              Four interconnected pillars of culture, commerce, creativity, and consciousness.
-              <br className="hidden sm:block" />
-              <span className="sm:hidden"> </span>Each experience is curated by experts and enhanced by evolving intelligence.
+            <p className="body-text text-sm sm:text-base text-black/60 max-w-2xl mx-auto">
+              Four pillars of culture, commerce, creativity, and consciousness.
             </p>
           </motion.div>
 
@@ -112,8 +105,8 @@ export default function HomePage() {
                 onMouseEnter={() => setSelectedPillar(pillar.id)}
                 onMouseLeave={() => setSelectedPillar(null)}
                 onClick={() => handlePillarClick(pillar)}
-                className={`pillar-bubble group cursor-pointer relative overflow-hidden ${
-                  selectedPillar === pillar.id ? 'pillar-active' : ''
+                className={`group cursor-pointer relative p-8 transition-all duration-300 hover:bg-gray-50 ${
+                  selectedPillar === pillar.id ? 'bg-black text-white' : 'bg-white'
                 }`}
               >
                 {/* Background Gradient */}
@@ -123,13 +116,8 @@ export default function HomePage() {
                 
                 <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 items-center">
                   
-                  {/* Left: Icon and Title */}
+                  {/* Left: Title */}
                   <div className="text-center lg:text-left">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 mb-4 sm:mb-6 transition-colors duration-300 ${
-                      selectedPillar === pillar.id ? 'text-white' : 'text-black'
-                    }`}>
-                      {pillar.icon}
-                    </div>
                     <h3 className={`heading-lg mb-2 transition-colors duration-300 ${
                       selectedPillar === pillar.id ? 'text-white' : 'text-black'
                     }`}>

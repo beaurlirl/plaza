@@ -44,7 +44,7 @@ export default function HuePage() {
               className="nav-text flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
               >
               <span>←</span>
-              <span>plaza</span>
+              <span className="font-light">plaza</span>
               </button>
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${isLoading ? 'bg-blue-500 animate-pulse' : 'bg-green-500'}`}></div>

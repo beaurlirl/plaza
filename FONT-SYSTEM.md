@@ -1,53 +1,42 @@
 # Plaza Font System
 
-## Three-Tier Typography Hierarchy
+## Unified Typography Hierarchy
 
-### 🎯 **Primary Font: Union Helvetica**
-- **Usage**: Headlines, main content, body text
-- **Character**: Bold, architectural, brutalist
-- **Classes**: `.heading-xl`, `.heading-lg`, `.heading-md`, `.body-text`
-- **Files**: Located in `/public/fonts/unionforplaza/`
-
-### 🔧 **Secondary Font: JetBrains Mono**
-- **Usage**: Technical elements, data, code, timestamps
-- **Character**: Technical, precise, monospaced
-- **Classes**: `.mono-text`
+### 🎯 **Primary Font: Inter (Radio Grotesque Alternative)**
+- **Usage**: All text elements - headlines, content, navigation, UI
+- **Character**: Modern, clean, highly readable, versatile
+- **Classes**: `.heading-xl`, `.heading-lg`, `.heading-md`, `.body-text`, `.nav-text`, `.mono-text`
 - **Source**: Google Fonts import
-
-### 🧭 **Tertiary Font: Space Grotesk**
-- **Usage**: Navigation, UI elements, buttons, labels
-- **Character**: Clean, minimal, modern
-- **Classes**: `.nav-text`, `.nav-text-medium`, `.nav-text-bold`
-- **Source**: Google Fonts import
+- **Fallback**: Radio Grotesque, Helvetica Neue, Arial, sans-serif
 
 ## Implementation Examples
 
 ### Navigation Elements
 ```tsx
-// Use Space Grotesk for all navigation
+// Use Inter for all navigation
 <a className="nav-text-medium uppercase tracking-wide">BROWSE</a>
 <button className="nav-text text-xs">export</button>
 ```
 
 ### Headlines
 ```tsx
-// Use Union Helvetica for main headlines
+// Use Inter for main headlines
 <h1 className="heading-xl">PLAZA</h1>
 <h2 className="heading-lg">Welcome</h2>
 ```
 
 ### Technical Data
 ```tsx
-// Use JetBrains Mono for technical elements
+// Use Inter for technical elements
 <span className="mono-text text-xs">HUE: 180°</span>
 <div className="mono-text text-sm">LOADING...</div>
 ```
 
 ## Font Loading Strategy
 
-1. **Union Helvetica**: Custom font files with fallbacks
-2. **JetBrains Mono**: Google Fonts with local fallback
-3. **Space Grotesk**: Google Fonts with system fallbacks
+1. **Inter**: Google Fonts with Radio Grotesque fallback
+2. **Unified System**: Single font family for consistency
+3. **Optimized Weights**: 300-900 range for all use cases
 
 ## Accessibility Notes
 

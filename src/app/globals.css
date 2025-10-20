@@ -1,37 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Union Helvetica Custom Font */
-@font-face {
-  font-family: 'Union Helvetica';
-  src: url('/fonts/unionforplaza/Union-Regular copy 4.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Union Helvetica';
-  src: url('/fonts/unionforplaza/Union-Bold copy 2.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Union Helvetica';
-  src: url('/fonts/unionforplaza/Union-Italic copy 5.otf') format('opentype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Union Helvetica';
-  src: url('/fonts/unionforplaza/Union-BoldItalic copy 2.otf') format('opentype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
+/* Inter Font - Modern alternative to Radio Grotesque */
 
 @tailwind base;
 @tailwind components;
@@ -56,7 +25,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Inter', 'Radio Grotesque', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   background: var(--background);
   color: var(--foreground);
   line-height: 1.5;
@@ -85,10 +54,10 @@ body {
 }
 
 /* Plaza Typography System */
-/* Primary Font: Union Helvetica - Headlines and main content */
+/* Primary Font: Inter (Radio Grotesque alternative) - Headlines and main content */
 .heading-xl {
-  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
+  font-family: 'Inter', 'Radio Grotesque', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 600;
   font-size: clamp(2.5rem, 8vw, 6rem);
   line-height: 0.9;
   letter-spacing: -0.02em;
@@ -96,48 +65,48 @@ body {
 }
 
 .heading-lg {
-  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
+  font-family: 'Inter', 'Radio Grotesque', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 500;
   font-size: clamp(1.5rem, 4vw, 3rem);
   line-height: 1.1;
   letter-spacing: -0.01em;
 }
 
 .heading-md {
-  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
+  font-family: 'Inter', 'Radio Grotesque', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 500;
   font-size: clamp(1rem, 2.5vw, 1.5rem);
   line-height: 1.2;
   text-transform: uppercase;
 }
 
 .body-text {
-  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Inter', 'Radio Grotesque', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-weight: 400;
   line-height: 1.6;
 }
 
-/* Secondary Font: JetBrains Mono - Technical and data elements */
+/* Secondary Font: Inter - Technical and data elements */
 .mono-text {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', 'Radio Grotesque', monospace;
   font-weight: 400;
 }
 
-/* Tertiary Font: Space Grotesk - Navigation and UI elements */
+/* Tertiary Font: Inter - Navigation and UI elements */
 .nav-text {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Inter', 'Radio Grotesque', system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.4;
 }
 
 .nav-text-medium {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Inter', 'Radio Grotesque', system-ui, sans-serif;
   font-weight: 500;
   line-height: 1.4;
 }
 
 .nav-text-bold {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Inter', 'Radio Grotesque', system-ui, sans-serif;
   font-weight: 700;
   line-height: 1.4;
 }
@@ -148,8 +117,8 @@ body {
   color: #ffffff;
   border: var(--border-brutal);
   padding: 1rem 2rem;
-  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
+  font-family: 'Inter', 'Radio Grotesque', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -168,8 +137,8 @@ body {
   color: #000000;
   border: var(--border-brutal);
   padding: 1rem 2rem;
-  font-family: 'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
+  font-family: 'Inter', 'Radio Grotesque', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -187,9 +156,9 @@ body {
   background: #000000;
   color: #ffffff;
   padding: 0.25rem 0.75rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', 'Radio Grotesque', monospace;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   border-radius: 0;

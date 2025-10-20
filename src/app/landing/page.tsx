@@ -22,7 +22,7 @@ export default function LandingPage() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-          className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-normal text-black mb-12 sm:mb-16 lowercase"
+          className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-light text-black mb-12 sm:mb-16 lowercase"
           style={{ 
             fontFamily: "'Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
             lineHeight: 0.8

@@ -9,9 +9,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'union': ['Union Helvetica', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
-        'space': ['Space Grotesk', 'system-ui', 'sans-serif'],
-        'mono': ['JetBrains Mono', 'monospace'],
+        'radio': ['Inter', 'Radio Grotesque', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        'inter': ['Inter', 'Radio Grotesque', 'system-ui', 'sans-serif'],
+        'mono': ['Inter', 'Radio Grotesque', 'monospace'],
       },
       colors: {
         background: "var(--background)",
