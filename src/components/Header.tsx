@@ -1,12 +1,9 @@
 'use client';
 
-import { Search, Upload, User, ShoppingBag, Menu } from 'lucide-react';
+import { User, ShoppingBag, Menu } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Header() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   return (
@@ -20,46 +17,6 @@ export default function Header() {
             </a>
           </div>
 
-          {/* Search Bar */}
-          <div className="flex-1 max-w-2xl mx-4 lg:mx-8 hidden lg:block">
-            <div className={`relative transition-all duration-200 ${isSearchFocused ? 'transform -translate-y-1' : ''}`}>
-              <div className="glass-panel-strong rounded-3xl p-4 flex items-center space-x-4">
-                <Search className="w-6 h-6 text-black" />
-                <input
-                  type="text"
-                  placeholder="SEARCH • DESCRIBE WHAT YOU WANT"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setIsSearchFocused(true)}
-                  onBlur={() => setIsSearchFocused(false)}
-                  className="flex-1 bg-transparent border-none outline-none text-black placeholder-black/60 nav-text-medium text-sm uppercase tracking-wide"
-                />
-                <button className="p-2 hover:bg-black/5 rounded-2xl transition-colors">
-                  <Upload className="w-5 h-5 text-black" />
-                </button>
-              </div>
-              
-              {/* AI Search Suggestions */}
-              {searchQuery && (
-                <div className="absolute top-full left-0 right-0 mt-2 glass-panel rounded-3xl p-4 animate-slide-in">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="mono-text text-xs text-black/80">SUGGESTIONS</span>
-                      <span className="ai-badge">94%</span>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="p-3 hover:bg-black/5 rounded-2xl cursor-pointer transition-colors">
-                        <span className="body-text text-sm">Minimalist black leather jacket</span>
-                      </div>
-                      <div className="p-3 hover:bg-black/5 rounded-2xl cursor-pointer transition-colors">
-                        <span className="body-text text-sm">Contemporary abstract art pieces</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
 
           {/* Tablet Navigation (md to lg) */}
           <nav className="hidden md:flex lg:hidden items-center space-x-2">
@@ -104,12 +61,6 @@ export default function Header() {
 
           {/* Mobile Navigation */}
           <div className="md:hidden flex items-center space-x-1 sm:space-x-2">
-            <button 
-              onClick={() => setShowMobileSearch(!showMobileSearch)}
-              className="p-2 sm:p-3 hover:bg-black/5 rounded-2xl transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-            >
-              <Search className="w-5 h-5 text-black" />
-            </button>
             <button className="p-2 sm:p-3 hover:bg-black/5 rounded-2xl transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
               <ShoppingBag className="w-5 h-5 text-black" />
             </button>
@@ -122,24 +73,6 @@ export default function Header() {
           </div>
         </div>
         
-        {/* Mobile Search */}
-        {showMobileSearch && (
-          <div className="md:hidden border-t-brutal border-black p-3 sm:p-4">
-            <div className="glass-panel-strong rounded-3xl p-4 flex items-center space-x-4">
-              <Search className="w-5 h-5 text-black" />
-              <input
-                type="text"
-                placeholder="SEARCH ITEMS"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 bg-transparent border-none outline-none text-black placeholder-black/60 font-union font-medium text-xs sm:text-sm uppercase tracking-wide"
-              />
-              <button className="p-2 hover:bg-black/5 rounded-2xl transition-colors">
-                <Upload className="w-4 h-4 text-black" />
-              </button>
-            </div>
-          </div>
-        )}
 
         {/* Mobile Menu */}
         {showMobileMenu && (
