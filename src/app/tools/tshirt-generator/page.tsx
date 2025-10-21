@@ -74,11 +74,11 @@ export default function TshirtGenerator() {
         className="w-56 sm:w-64 lg:w-80 h-56 sm:h-64 lg:h-80 relative cursor-pointer flex items-center justify-center animate-gentle-wave glass-panel rounded-3xl border-2 border-gray-300"
         style={{
           background,
-          WebkitMaskImage: "url('/tshirt.svg')",
+          WebkitMaskImage: "url('/shirtforpublic.svg')",
           WebkitMaskSize: '100%',
           WebkitMaskRepeat: 'no-repeat',
           WebkitMaskPosition: 'center',
-          maskImage: "url('/tshirt.svg')",
+          maskImage: "url('/shirtforpublic.svg')",
           maskSize: '100%',
           maskRepeat: 'no-repeat',
           maskPosition: 'center',
