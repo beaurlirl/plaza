@@ -12,7 +12,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="/" className="hover:opacity-70 transition-opacity">
+            <a href="/home" className="hover:opacity-70 transition-opacity">
               <h1 className="text-2xl font-light text-black lowercase nav-text">plaza</h1>
             </a>
           </div>

@@ -7,8 +7,8 @@ export default function RootPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to landing page immediately
-    router.replace('/landing');
+    // Redirect to home page immediately
+    router.replace('/home');
   }, [router]);
 
   // Show minimal loading state while redirecting
