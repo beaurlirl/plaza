@@ -71,31 +71,31 @@ export default function TshirtGenerator() {
       <div 
         ref={shirtRef}
         onClick={() => setIsPopupActive(true)}
-        className="w-56 sm:w-64 lg:w-80 h-56 sm:h-64 lg:h-80 relative cursor-pointer flex items-center justify-center animate-gentle-wave glass-panel rounded-3xl"
+        className="w-56 sm:w-64 lg:w-80 h-56 sm:h-64 lg:h-80 relative cursor-pointer flex items-center justify-center animate-gentle-wave glass-panel rounded-3xl border-2 border-gray-300"
         style={{
           background,
-          WebkitMaskImage: "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik01MCAzMEg3MEM3NSAzMCA4MCAyNSA4MCAyMEM4MCAyMCA4NSAxNSA5MCAyMEM5NSAyNSAxMDAgMzAgMTUwIDMwSDE1MEMxNTUgMzAgMTYwIDM1IDE2MCA0MFYxNjBDMTYwIDE2NSAxNTUgMTcwIDE1MCAxNzBINTBDNDUgMTcwIDQwIDE2NSA0MCAxNjBWNDBDNDAgMzUgNDUgMzAgNTAgMzBaIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K')",
-          WebkitMaskSize: '80%',
+          WebkitMaskImage: "url('/tshirt.svg')",
+          WebkitMaskSize: '100%',
           WebkitMaskRepeat: 'no-repeat',
           WebkitMaskPosition: 'center',
-          maskImage: "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik01MCAzMEg3MEM3NSAzMCA4MCAyNSA4MCAyMEM4MCAyMCA4NSAxNSA5MCAyMEM5NSAyNSAxMDAgMzAgMTUwIDMwSDE1MEMxNTUgMzAgMTYwIDM1IDE2MCA0MFYxNjBDMTYwIDE2NSAxNTUgMTcwIDE1MCAxNzBINTBDNDUgMTcwIDQwIDE2NSA0MCAxNjBWNDBDNDAgMzUgNDUgMzAgNTAgMzBaIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K')",
-          maskSize: '80%',
+          maskImage: "url('/tshirt.svg')",
+          maskSize: '100%',
           maskRepeat: 'no-repeat',
           maskPosition: 'center',
         }}
       >
-        {/* Title - Above center */}
-        <div className="absolute top-[20%] left-0 right-0 text-center">
+        {/* Title - Chest area */}
+        <div className="absolute top-[25%] left-0 right-0 text-center">
           <div className="text-2xl font-normal text-white drop-shadow-lg">{shirtText.title}</div>
         </div>
 
-        {/* Subtitle - Below center */}
-        <div className="absolute bottom-[20%] left-0 right-0 text-center">
+        {/* Subtitle - Lower chest */}
+        <div className="absolute top-[40%] left-0 right-0 text-center">
           <div className="text-lg font-medium text-white drop-shadow-lg">{shirtText.subtitle}</div>
         </div>
 
-        {/* Side Title */}
-        <div className="absolute top-1/2 right-[20%] -translate-y-1/2">
+        {/* Side Title - Left sleeve */}
+        <div className="absolute top-[30%] left-[10%] -translate-y-1/2">
           <div className="text-base font-medium text-white drop-shadow-lg transform rotate-90">{shirtText.sideTitle}</div>
         </div>
       </div>
