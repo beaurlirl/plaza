@@ -51,7 +51,7 @@ export default function LandingPage() {
             paddingRight: '2rem'
           }}
         >
-          ENTER PLAZA
+          ENTER
         </motion.button>
       </motion.div>
     </div>
