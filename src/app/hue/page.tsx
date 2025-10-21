@@ -36,28 +36,24 @@ export default function HuePage() {
     <div className="min-h-screen bg-white">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-        <div className="text-center mb-6">
-          <div className="flex items-center justify-between mb-4">
-              <button
-              onClick={() => window.location.href = '/home'}
-              className="nav-text flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-              >
-              <span>←</span>
-              <span className="font-light">plaza</span>
-              </button>
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${isLoading ? 'bg-blue-500 animate-pulse' : 'bg-green-500'}`}></div>
-              <span className="mono-text text-xs text-gray-500">
-                {isLoading ? 'Processing' : 'Online'}
-              </span>
-            </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2">
+        <div className="flex items-center justify-between mb-2">
+          <button
+            onClick={() => window.location.href = '/home'}
+            className="nav-text flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <span>←</span>
+            <span className="font-light">plaza</span>
+          </button>
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full ${isLoading ? 'bg-blue-500 animate-pulse' : 'bg-green-500'}`}></div>
+            <span className="mono-text text-xs text-gray-500">
+              {isLoading ? 'Processing' : 'Online'}
+            </span>
           </div>
-          <h1 className="heading-lg text-black mb-4">hue</h1>
-          <p className="body-text text-xl text-black/80">AI Digital Assistant</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-[calc(100vh-200px)]">
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-4 h-[calc(100vh-120px)]">
           <div className="w-full lg:w-1/2">
             <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-blue-500 overflow-hidden h-full shadow-lg relative">
               {use3D ? (
