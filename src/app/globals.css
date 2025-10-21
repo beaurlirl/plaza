@@ -326,8 +326,8 @@ body {
   
   /* Fixed chat container - no page scrolling */
   .chat-container {
-    height: 100%;
-    max-height: 100vh;
+    height: 50vh; /* Fixed height on mobile - never changes */
+    max-height: 50vh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -343,10 +343,12 @@ body {
   
   /* Mobile-specific: Ensure input stays at bottom */
   @media (max-width: 1024px) {
-    /* Make sure chat container takes full height */
+    /* Lock chat container to fixed height - never expands */
     .chat-container {
-      height: 100%;
-      min-height: 50vh;
+      height: 50vh !important; /* Force fixed height */
+      max-height: 50vh !important;
+      min-height: 50vh !important;
+      flex-shrink: 0; /* Prevent shrinking */
     }
     
     /* Pin input area to bottom of container */
@@ -356,11 +358,16 @@ body {
       background: white;
       border-top: 1px solid #e5e7eb;
       z-index: 20;
+      flex-shrink: 0; /* Never shrink input area */
     }
     
-    /* Ensure messages area doesn't push input down */
+    /* Lock messages area to fixed height */
     .chat-container .overflow-y-auto {
-      max-height: calc(100% - 120px); /* Account for header and input height */
+      height: calc(50vh - 120px) !important; /* Fixed height minus header/input */
+      max-height: calc(50vh - 120px) !important;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
   }
 }

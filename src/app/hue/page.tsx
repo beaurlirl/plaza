@@ -77,7 +77,10 @@ export default function HuePage() {
 
           <div className="w-full lg:w-1/2 flex flex-col">
             <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-yellow-500 overflow-hidden h-full shadow-lg flex flex-col">
-              <ChatUI isDarkMode={isDarkMode} />
+              {/* Mobile: Fixed height chat container */}
+              <div className="h-full lg:h-full mobile:h-[50vh] flex flex-col">
+                <ChatUI isDarkMode={isDarkMode} />
+              </div>
             </div>
           </div>
         </div>
