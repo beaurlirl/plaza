@@ -50,7 +50,7 @@ export default function HomePage() {
       subtitle: 'EVOLVING CONSCIOUSNESS',
       description: 'Meet our AI avatar that learns and evolves through conversations, developing personality and preparing for embodiment',
       href: '/hue',
-      color: 'from-purple/20 to-blue/10'
+      color: 'from-black/20 to-black/10'
     }
   ];
 
@@ -86,9 +86,6 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-20"
           >
-            <h2 className="heading-lg text-black mb-4 sm:mb-6">
-              ENTER THE SPACE
-            </h2>
             <p className="body-text text-sm sm:text-base text-black/60 max-w-2xl mx-auto">
               Four pillars of culture, commerce, creativity, and consciousness.
             </p>

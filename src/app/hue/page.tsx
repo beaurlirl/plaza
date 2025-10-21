@@ -36,9 +36,9 @@ export default function HuePage() {
     <div className="min-h-screen bg-white">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-between mb-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="text-center mb-6">
+          <div className="flex items-center justify-between mb-4">
               <button
               onClick={() => window.location.href = '/home'}
               className="nav-text flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
@@ -57,9 +57,9 @@ export default function HuePage() {
           <p className="body-text text-xl text-black/80">AI Digital Assistant</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-          <div className="w-full lg:w-1/2 overflow-visible -ml-20">
-            <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-blue-500 overflow-visible h-[600px] shadow-lg relative">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-[calc(100vh-200px)]">
+          <div className="w-full lg:w-1/2">
+            <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-blue-500 overflow-hidden h-full shadow-lg relative">
               {use3D ? (
                 <DirectHueModel isTalking={isLoading} />
               ) : (
@@ -69,15 +69,15 @@ export default function HuePage() {
               {/* Toggle button for testing */}
               <button
                 onClick={() => setUse3D(!use3D)}
-                className="absolute top-4 right-4 px-3 py-1 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full transition-colors"
+                className="absolute top-4 right-4 px-3 py-1 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full transition-colors z-10"
               >
                 {use3D ? '3D' : '2D'}
               </button>
             </div>
           </div>
 
-          <div className="w-full lg:w-1/2 mt-6 lg:mt-0">
-            <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-blue-500 overflow-hidden h-[600px] shadow-lg">
+          <div className="w-full lg:w-1/2">
+            <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-blue-500 overflow-hidden h-full shadow-lg">
               <ChatUI isDarkMode={isDarkMode} />
             </div>
           </div>

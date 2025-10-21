@@ -42,7 +42,7 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
       0.1,
       1000
     );
-    camera.position.set(0, 0, 3);
+    camera.position.set(0, 0, 4);
     camera.lookAt(0, 0, 0);
     
     console.log('DirectHueModel: Camera setup:', {
@@ -58,6 +58,10 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
     });
     renderer.setSize(mountRef.current.offsetWidth, mountRef.current.offsetHeight);
     renderer.setClearColor(0x000000, 0); // Transparent background
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.top = '50%';
+    renderer.domElement.style.left = '50%';
+    renderer.domElement.style.transform = 'translate(-50%, -50%)';
     rendererRef.current = renderer;
     mountRef.current.appendChild(renderer.domElement);
 
@@ -85,15 +89,6 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
     const loader = new FBXLoader();
     console.log('DirectHueModel: FBXLoader created:', loader);
     console.log('DirectHueModel: Starting FBX load from /models/hue.fbx');
-    
-    // Test if file is accessible first
-    fetch('/models/hue.fbx', { method: 'HEAD' })
-      .then(response => {
-        console.log('DirectHueModel: FBX file accessibility test:', response.status, response.statusText);
-      })
-      .catch(error => {
-        console.error('DirectHueModel: FBX file not accessible:', error);
-      });
 
     loader.load(
       '/models/hue.fbx',
@@ -113,13 +108,12 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
         
         // Scale based on the largest dimension to fit in view
         const maxDimension = Math.max(size.x, size.y, size.z);
-        const scale = 2.5 / maxDimension; // Adjust this value to change model size
+        const scale = 3.0 / maxDimension; // Slightly larger scale for better visibility
         object.scale.setScalar(scale);
         
-        // Center the model
-        object.position.sub(center.multiplyScalar(scale));
-        object.position.y -= size.y * scale * 0.1; // Move it up slightly
-        object.position.x -= 0.77; // Move it to the left (3px right adjustment)
+        // Center the model perfectly - subtract the original center offset
+        object.position.sub(center);
+        object.position.set(0, -1.2, 0); // Lower the character just a little bit more
         
         // Face forward
         object.rotation.y = 0;
@@ -290,7 +284,10 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
       style={{ 
         background: 'transparent',
         zIndex: 9999,
-        position: 'relative'
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}
     >
       {/* Loading indicator - only show while loading */}
