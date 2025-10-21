@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Send } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
 
@@ -11,6 +11,12 @@ interface ChatUIProps {
 export function ChatUI({ isDarkMode }: ChatUIProps) {
   const [inputMessage, setInputMessage] = useState('');
   const { messages, isLoading, sendMessage, clearMessages } = useChat();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -27,9 +33,9 @@ export function ChatUI({ isDarkMode }: ChatUIProps) {
   };
 
   return (
-    <div className="h-full flex flex-col p-4 chat-container">
-      {/* Chat Header */}
-      <div className="flex justify-between items-center mb-4">
+    <div className="h-full flex flex-col chat-container">
+      {/* Chat Header - Fixed */}
+      <div className="flex justify-between items-center p-4 border-b border-gray-200/30 flex-shrink-0">
         <h3 className="nav-text-medium text-lg">Chat with Hue</h3>
         <button
           onClick={clearMessages}
@@ -39,8 +45,8 @@ export function ChatUI({ isDarkMode }: ChatUIProps) {
         </button>
       </div>
 
-      {/* Chat Messages - Scrollable */}
-      <div className="flex-1 overflow-y-auto mb-4">
+      {/* Chat Messages - Fixed height with internal scrolling */}
+      <div className="flex-1 overflow-y-auto p-4 min-h-0">
         {messages.length === 0 ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">
@@ -75,12 +81,14 @@ export function ChatUI({ isDarkMode }: ChatUIProps) {
                 </div>
               </div>
             ))}
+            {/* Invisible element to scroll to */}
+            <div ref={messagesEndRef} />
           </div>
         )}
       </div>
 
       {/* Chat Input - Fixed at Bottom */}
-      <div className="border-t border-gray-200/30 pt-4">
+      <div className="border-t border-gray-200/30 p-4 flex-shrink-0">
         <div className="flex gap-3">
           <input
             type="text"

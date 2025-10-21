@@ -323,4 +323,21 @@ body {
     transform: scale(1);
     zoom: 1;
   }
+  
+  /* Fixed chat container - no page scrolling */
+  .chat-container {
+    height: 100%;
+    max-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Ensure chat messages area scrolls internally */
+  .chat-container .overflow-y-auto {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
