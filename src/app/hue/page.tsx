@@ -55,7 +55,7 @@ export default function HuePage() {
 
         <div className="flex flex-col lg:flex-row gap-2 lg:gap-3 h-[calc(100vh-100px)]">
           <div className="w-full lg:w-1/2">
-            <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-blue-500 overflow-hidden h-full shadow-lg relative">
+            <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-yellow-500 overflow-hidden h-full shadow-lg relative">
               {use3D ? (
                 <DirectHueModel isTalking={isLoading} />
               ) : (
@@ -65,7 +65,7 @@ export default function HuePage() {
               {/* Toggle button for testing */}
               <button
                 onClick={() => setUse3D(!use3D)}
-                className="absolute top-4 right-4 px-3 py-1 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full transition-colors z-10"
+                className="absolute top-4 right-4 px-3 py-1 text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 rounded-full transition-colors z-10"
               >
                 {use3D ? '3D' : '2D'}
               </button>
@@ -73,7 +73,7 @@ export default function HuePage() {
           </div>
 
           <div className="w-full lg:w-1/2">
-            <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-blue-500 overflow-hidden h-full shadow-lg">
+            <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-yellow-500 overflow-hidden h-full shadow-lg">
               <ChatUI isDarkMode={isDarkMode} />
             </div>
           </div>
