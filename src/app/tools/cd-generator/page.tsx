@@ -10,23 +10,24 @@ export default function CDGenerator() {
     artist: 'mixtape',
     year: '2024'
   });
-  const [backgroundType, setBackgroundType] = useState('holographic');
-  const [background, setBackground] = useState('radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.1) 100%)');
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [backgroundType, setBackgroundType] = useState('solid');
+  const [background, setBackground] = useState('#000000');
   const [isPopupActive, setIsPopupActive] = useState(false);
   const cdRef = useRef<HTMLDivElement>(null);
 
   const handleBackgroundTypeChange = (type: string) => {
     setBackgroundType(type);
-    if (type === 'holographic') {
-      setBackground('radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.1) 100%)');
-      setUploadedImage(null);
-    }
   };
 
   const handleColorChange = (color: string) => {
     setBackground(color);
-    setUploadedImage(null);
+  };
+
+  const generateRandomGradient = () => {
+    const randomColor1 = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    const randomColor2 = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    const angle = Math.floor(Math.random() * 360);
+    setBackground(`linear-gradient(${angle}deg, ${randomColor1}, ${randomColor2})`);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,19 +36,11 @@ export default function CDGenerator() {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
-          setUploadedImage(event.target.result as string);
+          setBackground(`url('${event.target.result}') no-repeat center/cover`);
         }
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const generateRandomGradient = () => {
-    const randomColor1 = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-    const randomColor2 = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-    const angle = Math.floor(Math.random() * 360);
-    setBackground(`linear-gradient(${angle}deg, ${randomColor1}, ${randomColor2})`);
-    setUploadedImage(null);
   };
 
   const downloadCD = async () => {
@@ -65,7 +58,7 @@ export default function CDGenerator() {
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-between p-4 sm:p-6">
       {/* Header */}
-      <div className="w-full max-w-4xl flex flex-col lg:flex-row items-center justify-between mb-6 sm:mb-8 space-y-4 lg:space-y-0">
+      <div className="w-full max-w-4xl flex flex-col lg:flex-row items-center justify-between mb-4 space-y-4 lg:space-y-0">
         <a href="/tools" className="flex items-center space-x-3 hover:text-black/60 transition-colors self-start lg:self-center">
           <ArrowLeft className="w-5 h-5" />
           <span className="mono-text text-sm uppercase tracking-wide">back to tools</span>
@@ -78,77 +71,32 @@ export default function CDGenerator() {
       <div 
         ref={cdRef}
         onClick={() => setIsPopupActive(true)}
-        className="w-56 h-56 sm:w-64 sm:h-64 lg:w-80 lg:h-80 relative cursor-pointer aspect-square mb-6 sm:mb-8"
+        className="w-56 sm:w-64 lg:w-80 h-56 sm:h-64 lg:h-80 relative cursor-pointer flex items-center justify-center animate-gentle-wave glass-panel rounded-3xl border-2 border-gray-300"
         style={{
-          perspective: '1000px',
-          transformStyle: 'preserve-3d',
+          background,
+          WebkitMaskImage: "url('/shirtforpublic.svg')",
+          WebkitMaskSize: '100%',
+          WebkitMaskRepeat: 'no-repeat',
+          WebkitMaskPosition: 'center',
+          maskImage: "url('/shirtforpublic.svg')",
+          maskSize: '100%',
+          maskRepeat: 'no-repeat',
+          maskPosition: 'center',
         }}
       >
-        {/* Main CD Circle with Holographic Effect */}
-        <div 
-          className="w-full h-full rounded-full absolute animate-spin-slow"
-          style={{
-            background: uploadedImage 
-              ? `url('${uploadedImage}') center/cover no-repeat`
-              : backgroundType === 'holographic'
-                ? `linear-gradient(135deg, 
-                    rgba(255,255,255,0.4) 0%, 
-                    rgba(255,255,255,0.2) 25%, 
-                    rgba(255,255,255,0.6) 50%, 
-                    rgba(255,255,255,0.2) 75%, 
-                    rgba(255,255,255,0.4) 100%)`
-                : background,
-            boxShadow: '0 0 30px rgba(0,0,0,0.2), inset 0 0 50px rgba(255,255,255,0.3)',
-            transform: 'rotateX(20deg)',
-            filter: backgroundType === 'holographic' 
-              ? 'hue-rotate(calc(var(--hue, 0) * 1deg))'
-              : 'none',
-          }}
-        >
-          {/* Holographic Overlay when image is present */}
-          {uploadedImage && (
-            <div 
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: `linear-gradient(135deg, 
-                  rgba(255,255,255,0.4) 0%, 
-                  rgba(255,255,255,0.1) 25%, 
-                  rgba(255,255,255,0.3) 50%, 
-                  rgba(255,255,255,0.1) 75%, 
-                  rgba(255,255,255,0.4) 100%)`,
-                mixBlendMode: 'overlay',
-                opacity: 0.7,
-              }}
-            />
-          )}
+        {/* Title - Chest area */}
+        <div className="absolute top-[25%] left-0 right-0 text-center">
+          <div className="text-2xl font-normal text-white drop-shadow-lg">{cdText.title}</div>
+        </div>
 
-          {/* Center Ring */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-b from-gray-200 to-gray-400">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white"></div>
-          </div>
+        {/* Subtitle - Lower chest */}
+        <div className="absolute top-[40%] left-0 right-0 text-center">
+          <div className="text-lg font-medium text-white drop-shadow-lg">{cdText.artist}</div>
+        </div>
 
-          {/* Rainbow Reflection Effect */}
-          <div 
-            className="absolute inset-0 rounded-full opacity-20"
-            style={{
-              background: 'linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.9) 35%, rgba(255,255,255,0.5) 50%, transparent 65%)',
-              animation: 'moveLight 8s linear infinite',
-              mixBlendMode: 'soft-light',
-            }}
-          />
-
-          {/* Text Layer */}
-          <div className="absolute inset-0" style={{ zIndex: 10 }}>
-            <div className="absolute top-[20%] left-0 right-0 text-center">
-              <div className="text-xl font-normal text-white drop-shadow-lg">{cdText.title}</div>
-            </div>
-            <div className="absolute bottom-[20%] left-0 right-0 text-center">
-              <div className="text-lg font-medium text-white drop-shadow-lg">{cdText.artist}</div>
-            </div>
-            <div className="absolute top-1/2 right-[20%] -translate-y-1/2">
-              <div className="text-base font-medium text-white drop-shadow-lg transform rotate-90">{cdText.year}</div>
-            </div>
-          </div>
+        {/* Side Title - Left sleeve */}
+        <div className="absolute top-[30%] left-[10%] -translate-y-1/2">
+          <div className="text-base font-medium text-white drop-shadow-lg transform rotate-90">{cdText.year}</div>
         </div>
       </div>
 
@@ -165,7 +113,6 @@ export default function CDGenerator() {
                 onChange={(e) => handleBackgroundTypeChange(e.target.value)}
                 value={backgroundType}
               >
-                <option value="holographic">HOLOGRAPHIC</option>
                 <option value="solid">SOLID COLOR</option>
                 <option value="gradient">GRADIENT</option>
                 <option value="image">IMAGE</option>
@@ -179,6 +126,7 @@ export default function CDGenerator() {
                   type="color"
                   className="w-full h-12 rounded-2xl border-brutal border-black"
                   onChange={(e) => handleColorChange(e.target.value)}
+                  value={background}
                 />
               </div>
             )}
@@ -227,7 +175,7 @@ export default function CDGenerator() {
           <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsPopupActive(false)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="w-full max-w-md glass-panel-strong rounded-3xl p-4 sm:p-6 lg:p-8">
-            <h2 className="heading-md text-black mb-6">edit cd text</h2>
+            <h2 className="heading-md text-black mb-6">edit text</h2>
             <div className="space-y-4">
               <div>
                 <label className="mono-text text-sm text-black/60 mb-2 block">ALBUM TITLE</label>
@@ -273,18 +221,17 @@ export default function CDGenerator() {
 
       {/* Custom Animations */}
       <style jsx global>{`
-        @keyframes moveLight {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes spin-slow {
-          from { transform: rotateX(20deg) rotateZ(0deg); }
-          to { transform: rotateX(20deg) rotateZ(360deg); }
+        @keyframes gentle-wave {
+          0% { transform: scale(1) rotate(0deg) translateY(0px); }
+          25% { transform: scale(1.01) rotate(0.5deg) translateY(-2px); }
+          50% { transform: scale(1) rotate(-0.5deg) translateY(0px); }
+          75% { transform: scale(0.99) rotate(0.25deg) translateY(2px); }
+          100% { transform: scale(1) rotate(0deg) translateY(0px); }
         }
 
-        .animate-spin-slow {
-          animation: spin-slow 8s linear infinite;
+        .animate-gentle-wave {
+          animation: gentle-wave 6s ease-in-out infinite;
+          transform-origin: center center;
         }
       `}</style>
     </div>
