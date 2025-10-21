@@ -273,3 +273,27 @@ body {
 .shadow-brutal-hover {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
+
+/* Mobile 3D Model Optimizations */
+@media (max-width: 768px) {
+  /* Ensure 3D containers have proper dimensions on mobile */
+  .three-container {
+    min-height: 300px;
+    min-width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Mobile-specific WebGL canvas styling */
+  canvas {
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Prevent mobile zoom on 3D interactions */
+  .three-container * {
+    touch-action: manipulation;
+  }
+}

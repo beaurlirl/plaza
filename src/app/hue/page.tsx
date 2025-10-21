@@ -56,11 +56,14 @@ export default function HuePage() {
         <div className="flex flex-col lg:flex-row gap-2 lg:gap-3 h-[calc(100vh-140px)]">
           <div className="w-full lg:w-1/2">
             <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-yellow-500 overflow-hidden h-full shadow-lg relative">
-              {use3D ? (
-                <DirectHueModel isTalking={isLoading} />
-              ) : (
-                <SimpleHueModel isTalking={isLoading} />
-              )}
+              {/* Mobile-specific minimum height for 3D model */}
+              <div className="w-full h-full min-h-[300px] sm:min-h-[400px]">
+                {use3D ? (
+                  <DirectHueModel isTalking={isLoading} />
+                ) : (
+                  <SimpleHueModel isTalking={isLoading} />
+                )}
+              </div>
               
               {/* Toggle button for testing */}
               <button

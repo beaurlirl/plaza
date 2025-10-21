@@ -30,34 +30,64 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
       height: mountRef.current.offsetHeight
     });
 
+    // Detect mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                    window.innerWidth <= 768;
+    console.log('DirectHueModel: Mobile device detected:', isMobile);
+
     // Scene setup
     const scene = new THREE.Scene();
     scene.background = null; // Transparent background
     sceneRef.current = scene;
 
-    // Camera setup - simple centered view
+    // Camera setup - mobile-optimized
+    const aspect = mountRef.current.offsetWidth / mountRef.current.offsetHeight;
     const camera = new THREE.PerspectiveCamera(
-      75,
-      mountRef.current.offsetWidth / mountRef.current.offsetHeight,
+      isMobile ? 60 : 75, // Lower FOV for mobile to prevent distortion
+      aspect,
       0.1,
       1000
     );
-    camera.position.set(0, 0, 4);
+    
+    // Mobile-specific camera positioning
+    if (isMobile) {
+      camera.position.set(0, 0, 3); // Closer to model for mobile
+    } else {
+      camera.position.set(0, 0, 4);
+    }
     camera.lookAt(0, 0, 0);
     
     console.log('DirectHueModel: Camera setup:', {
       position: camera.position,
       aspect: camera.aspect,
-      fov: camera.fov
+      fov: camera.fov,
+      isMobile
     });
 
-    // Renderer setup
+    // Renderer setup - mobile-optimized
     const renderer = new THREE.WebGLRenderer({ 
-      antialias: true, 
-      alpha: true 
+      antialias: !isMobile, // Disable antialias on mobile for performance
+      alpha: true,
+      powerPreference: isMobile ? "low-power" : "high-performance",
+      precision: isMobile ? "lowp" : "highp"
     });
+    
+    // Set device pixel ratio for mobile
+    const pixelRatio = isMobile ? Math.min(window.devicePixelRatio, 2) : window.devicePixelRatio;
+    renderer.setPixelRatio(pixelRatio);
+    
     renderer.setSize(mountRef.current.offsetWidth, mountRef.current.offsetHeight);
     renderer.setClearColor(0x000000, 0); // Transparent background
+    
+    // Mobile-specific renderer settings
+    if (isMobile) {
+      renderer.shadowMap.enabled = false; // Disable shadows on mobile for performance
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+    } else {
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    }
+    
     renderer.domElement.style.position = 'absolute';
     renderer.domElement.style.top = '50%';
     renderer.domElement.style.left = '50%';
@@ -65,25 +95,36 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
     rendererRef.current = renderer;
     mountRef.current.appendChild(renderer.domElement);
 
-    // Enhanced lighting for better visibility
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
-    scene.add(ambientLight);
+    // Mobile-optimized lighting setup
+    if (isMobile) {
+      // Simplified lighting for mobile performance
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+      scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+      directionalLight.position.set(2, 2, 2);
+      scene.add(directionalLight);
+    } else {
+      // Enhanced lighting for desktop
+      const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
+      scene.add(ambientLight);
 
-    const frontLight = new THREE.DirectionalLight(0xffffff, 1.5);
-    frontLight.position.set(0, 0, 10);
-    scene.add(frontLight);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
+      directionalLight.position.set(5, 5, 5);
+      scene.add(directionalLight);
 
-    const pointLight1 = new THREE.PointLight(0xffffff, 1.0);
-    pointLight1.position.set(-5, 5, 5);
-    scene.add(pointLight1);
+      const frontLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      frontLight.position.set(0, 0, 10);
+      scene.add(frontLight);
 
-    const pointLight2 = new THREE.PointLight(0xffffff, 1.0);
-    pointLight2.position.set(5, 5, 5);
-    scene.add(pointLight2);
+      const pointLight1 = new THREE.PointLight(0xffffff, 1.0);
+      pointLight1.position.set(-5, 5, 5);
+      scene.add(pointLight1);
+
+      const pointLight2 = new THREE.PointLight(0xffffff, 1.0);
+      pointLight2.position.set(5, 5, 5);
+      scene.add(pointLight2);
+    }
 
     // Load FBX model
     const loader = new FBXLoader();
@@ -106,36 +147,58 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
         console.log('Model size:', size);
         console.log('Model center:', center);
         
-        // Scale based on the largest dimension to fit in view
+        // Mobile-optimized scaling
         const maxDimension = Math.max(size.x, size.y, size.z);
-        const scale = 3.0 / maxDimension; // Slightly larger scale for better visibility
+        let scale;
+        if (isMobile) {
+          scale = 2.5 / maxDimension; // Slightly smaller scale for mobile
+        } else {
+          scale = 3.0 / maxDimension; // Desktop scale
+        }
         object.scale.setScalar(scale);
         
         // Center the model perfectly - subtract the original center offset
         object.position.sub(center);
-        object.position.set(0, -1.2, 0); // Lower the character just a little bit more
+        
+        // Mobile-specific positioning
+        if (isMobile) {
+          object.position.set(0, -0.8, 0); // Higher position for mobile
+        } else {
+          object.position.set(0, -1.2, 0); // Desktop position
+        }
         
         // Face forward
         object.rotation.y = 0;
         
-        // Ensure materials are properly set up
+        // Mobile-optimized material setup
         object.traverse((child) => {
           if ((child as any).isMesh) {
             const mesh = child as THREE.Mesh;
             
-            // Enable shadows
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
+            // Mobile-specific shadow settings
+            if (!isMobile) {
+              mesh.castShadow = true;
+              mesh.receiveShadow = true;
+            }
             
             // Ensure materials are properly configured
             if (mesh.material) {
               if (Array.isArray(mesh.material)) {
                 mesh.material.forEach(mat => {
                   if (mat instanceof THREE.MeshStandardMaterial) {
+                    // Mobile-optimized material settings
+                    if (isMobile) {
+                      mat.roughness = 0.5; // Slightly more rough for mobile
+                      mat.metalness = 0.1; // Less metallic for mobile
+                    }
                     mat.needsUpdate = true;
                   }
                 });
               } else if (mesh.material instanceof THREE.MeshStandardMaterial) {
+                if (isMobile) {
+                  mesh.material.roughness = 0.5;
+                  mesh.material.metalness = 0.1;
+                }
                 mesh.material.needsUpdate = true;
               }
             }
@@ -182,16 +245,25 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
       (error) => {
         console.error('DirectHueModel: Error loading FBX:', error);
         const errorMessage = error instanceof Error ? error.message : String(error);
-        setLoadError(`Failed to load FBX model: ${errorMessage}`);
+        
+        // For mobile devices, be more lenient with errors
+        if (isMobile) {
+          console.log('DirectHueModel: Mobile device - using simplified fallback');
+          setLoadError(null); // Don't show error on mobile, just use fallback
+        } else {
+          setLoadError(`Failed to load FBX model: ${errorMessage}`);
+        }
         setIsLoading(false);
         
         // Show a fallback 3D shape
         console.log('DirectHueModel: Creating fallback 3D shape...');
-        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const geometry = isMobile ? 
+          new THREE.SphereGeometry(1, 16, 16) : // Lower poly count for mobile
+          new THREE.SphereGeometry(1, 32, 32);
         const material = new THREE.MeshStandardMaterial({ 
           color: isTalking ? 0x8B5CF6 : 0x4F46E5,
-          roughness: 0.3,
-          metalness: 0.1
+          roughness: isMobile ? 0.5 : 0.3,
+          metalness: isMobile ? 0.1 : 0.1
         });
         const fallbackMesh = new THREE.Mesh(geometry, material);
         fallbackMesh.position.set(0, 0, 0);
@@ -202,10 +274,20 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
       }
     );
 
-    // Animation loop
+    // Mobile-optimized animation loop
     const clock = new THREE.Clock();
-    const animate = () => {
+    let lastTime = 0;
+    const targetFPS = isMobile ? 30 : 60; // Lower FPS for mobile
+    const frameInterval = 1000 / targetFPS;
+    
+    const animate = (currentTime: number) => {
       frameRef.current = requestAnimationFrame(animate);
+
+      // Throttle animation for mobile
+      if (isMobile && currentTime - lastTime < frameInterval) {
+        return;
+      }
+      lastTime = currentTime;
 
       const delta = clock.getDelta();
 
@@ -229,18 +311,26 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
       // Render
       renderer.render(scene, camera);
     };
-    animate();
+    animate(0);
 
-    // Handle resize
+    // Mobile-aware resize handler
     const handleResize = () => {
       if (mountRef.current && rendererRef.current) {
         const width = mountRef.current.offsetWidth;
         const height = mountRef.current.offsetHeight;
         
+        // Update camera aspect ratio
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
         
+        // Update renderer size with mobile-optimized pixel ratio
+        const pixelRatio = isMobile ? Math.min(window.devicePixelRatio, 2) : window.devicePixelRatio;
+        rendererRef.current.setPixelRatio(pixelRatio);
         rendererRef.current.setSize(width, height);
+        
+        console.log('DirectHueModel: Resized for', isMobile ? 'mobile' : 'desktop', {
+          width, height, pixelRatio
+        });
       }
     };
 
@@ -280,7 +370,7 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
   return (
     <div 
       ref={mountRef} 
-      className="w-full h-full relative flex items-center justify-center"
+      className="w-full h-full relative flex items-center justify-center three-container"
       style={{ 
         background: 'transparent',
         zIndex: 9999,
