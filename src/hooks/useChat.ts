@@ -19,24 +19,26 @@ export function useChat() {
     setMessages(prev => [...prev, userMessage]);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get response from HUE');
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Mock responses based on message content
+      let mockResponse = "I'm HUE, your AI assistant. I'm currently in development mode, but I'm here to help you explore the Plaza marketplace!";
+      
+      if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+        mockResponse = "Hello! I'm HUE, your digital companion. I'm excited to help you discover amazing fashion and art pieces on Plaza!";
+      } else if (message.toLowerCase().includes('fashion') || message.toLowerCase().includes('clothing')) {
+        mockResponse = "Fashion is such a beautiful form of self-expression! I can help you find unique pieces that match your style. What kind of aesthetic are you drawn to?";
+      } else if (message.toLowerCase().includes('art') || message.toLowerCase().includes('painting')) {
+        mockResponse = "Art speaks to the soul! Plaza has an incredible collection of contemporary and classic pieces. Are you looking for something specific or just browsing?";
+      } else if (message.toLowerCase().includes('price') || message.toLowerCase().includes('cost')) {
+        mockResponse = "I understand you're curious about pricing! Each piece on Plaza is carefully curated and priced based on its artistic and market value. Would you like me to help you find pieces in a specific price range?";
       }
-
-      const data = await response.json();
       
       // Add Hue response
       const hueMessage = {
         id: (Date.now() + 1).toString(),
-        content: data.response,
+        content: mockResponse,
         sender: 'hue',
         timestamp: new Date()
       };
