@@ -27,20 +27,20 @@ export function ChatUI({ isDarkMode }: ChatUIProps) {
   };
 
   return (
-    <div className="h-full flex flex-col p-2">
+    <div className="h-full flex flex-col p-4">
       {/* Chat Header */}
-      <div className="flex justify-between items-center mb-2">
-        <h3 className="nav-text-medium text-sm">Chat with Hue</h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="nav-text-medium text-lg">Chat with Hue</h3>
         <button
           onClick={clearMessages}
-          className="body-text text-xs text-gray-500 hover:text-gray-700"
+          className="body-text text-sm text-gray-500 hover:text-gray-700"
         >
           Clear
         </button>
       </div>
 
       {/* Chat Messages - Scrollable */}
-      <div className="flex-1 overflow-y-auto mb-2">
+      <div className="flex-1 overflow-y-auto mb-4">
         {messages.length === 0 ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">
@@ -80,8 +80,8 @@ export function ChatUI({ isDarkMode }: ChatUIProps) {
       </div>
 
       {/* Chat Input - Fixed at Bottom */}
-      <div className="border-t border-gray-200/30 pt-2">
-        <div className="flex gap-2">
+      <div className="border-t border-gray-200/30 pt-4">
+        <div className="flex gap-3">
           <input
             type="text"
             value={inputMessage}
@@ -89,7 +89,7 @@ export function ChatUI({ isDarkMode }: ChatUIProps) {
             onKeyPress={handleKeyPress}
             placeholder="Start a conversation with Hue..."
             disabled={isLoading}
-            className={`flex-1 px-2 py-1 rounded-lg border border-gray-200 outline-none text-sm ${
+            className={`flex-1 px-4 py-3 rounded-lg border border-gray-200 outline-none text-sm ${
               isDarkMode
                 ? 'bg-gray-800 text-white placeholder-gray-400 border-gray-700'
                 : 'bg-white text-black placeholder-gray-500'
@@ -98,7 +98,7 @@ export function ChatUI({ isDarkMode }: ChatUIProps) {
           <button
             onClick={handleSendMessage}
             disabled={!inputMessage.trim() || isLoading}
-            className={`px-2 py-1 rounded-lg transition-all duration-200 disabled:opacity-50 ${
+            className={`px-4 py-3 rounded-lg transition-all duration-200 disabled:opacity-50 ${
               isDarkMode
                 ? 'bg-white text-black hover:bg-gray-100'
                 : 'bg-gray-600 text-white hover:bg-gray-700'
