@@ -53,7 +53,7 @@ export default function HuePage() {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-2 lg:gap-3 h-[calc(100vh-100px)]">
+        <div className="flex flex-col lg:flex-row gap-2 lg:gap-3 h-[calc(100vh-80px)]">
           <div className="w-full lg:w-1/2">
             <div className="bg-white border border-gray-200 rounded-3xl border-l-4 border-l-yellow-500 overflow-hidden h-full shadow-lg relative">
               {use3D ? (
