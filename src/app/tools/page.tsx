@@ -37,15 +37,15 @@ export default function Tools() {
             {/* Animated T-Shirt Preview */}
             <div className="mb-8 flex justify-center">
               <div 
-                className="w-64 h-64 relative cursor-pointer animate-gentle-wave"
+                className="w-64 h-64 relative cursor-pointer animate-gentle-wave glass-panel rounded-3xl border-2 border-gray-300"
                 style={{
                   background: 'linear-gradient(135deg, #000000 0%, #333333 100%)',
-                  WebkitMaskImage: "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik01MCAzMEg3MEM3NSAzMCA4MCAyNSA4MCAyMEM4MCAyMCA4NSAxNSA5MCAyMEM5NSAyNSAxMDAgMzAgMTUwIDMwSDE1MEMxNTUgMzAgMTYwIDM1IDE2MCA0MFYxNjBDMTYwIDE2NSAxNTUgMTcwIDE1MCAxNzBINTBDNDUgMTcwIDQwIDE2NSA0MCAxNjBWNDBDNDAgMzUgNDUgMzAgNTAgMzBaIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K')",
-                  WebkitMaskSize: '80%',
+                  WebkitMaskImage: "url('/shirtforpublic.svg')",
+                  WebkitMaskSize: '100%',
                   WebkitMaskRepeat: 'no-repeat',
                   WebkitMaskPosition: 'center',
-                  maskImage: "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik01MCAzMEg3MEM3NSAzMCA4MCAyNSA4MCAyMEM4MCAyMCA4NSAxNSA5MCAyMEM5NSAyNSAxMDAgMzAgMTUwIDMwSDE1MEMxNTUgMzAgMTYwIDM1IDE2MCA0MFYxNjBDMTYwIDE2NSAxNTUgMTcwIDE1MCAxNzBINTBDNDUgMTcwIDQwIDE2NSA0MCAxNjBWNDBDNDAgMzUgNDUgMzAgNTAgMzBaIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K')",
-                  maskSize: '80%',
+                  maskImage: "url('/shirtforpublic.svg')",
+                  maskSize: '100%',
                   maskRepeat: 'no-repeat',
                   maskPosition: 'center',
                 }}
@@ -53,8 +53,11 @@ export default function Tools() {
                 <div className="absolute top-[25%] left-0 right-0 text-center">
                   <div className="text-lg font-light text-white drop-shadow-lg">plaza</div>
                 </div>
-                <div className="absolute bottom-[25%] left-0 right-0 text-center">
+                <div className="absolute top-[40%] left-0 right-0 text-center">
                   <div className="text-sm font-light text-white drop-shadow-lg">design</div>
+                </div>
+                <div className="absolute top-[30%] left-[10%] -translate-y-1/2">
+                  <div className="text-xs font-light text-white drop-shadow-lg transform rotate-90">2024</div>
                 </div>
               </div>
             </div>
@@ -186,6 +189,7 @@ export default function Tools() {
         .animate-spin-slow {
           animation: spin-slow 8s linear infinite;
         }
+
       `}</style>
     </div>
   );
