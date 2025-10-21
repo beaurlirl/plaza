@@ -296,4 +296,31 @@ body {
   .three-container * {
     touch-action: manipulation;
   }
+  
+  /* Prevent zoom on input focus - iPhone chat style */
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  
+  /* Lock screen orientation and prevent zoom */
+  body {
+    -webkit-text-size-adjust: 100%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Allow text selection in chat areas only */
+  .chat-container, .chat-container * {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  
+  /* Prevent zoom on form elements */
+  input:focus, textarea:focus, select:focus {
+    transform: scale(1);
+    zoom: 1;
+  }
 }

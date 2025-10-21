@@ -162,7 +162,7 @@ export default function DirectHueModel({ isTalking }: DirectHueModelProps) {
         
         // Mobile-specific positioning
         if (isMobile) {
-          object.position.set(0, -0.8, 0); // Higher position for mobile
+          object.position.set(0, -1.0, 0); // Moved down 2 points from -0.8 to -1.0
         } else {
           object.position.set(0, -1.2, 0); // Desktop position
         }

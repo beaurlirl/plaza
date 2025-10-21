@@ -27,7 +27,7 @@ export function ChatUI({ isDarkMode }: ChatUIProps) {
   };
 
   return (
-    <div className="h-full flex flex-col p-4">
+    <div className="h-full flex flex-col p-4 chat-container">
       {/* Chat Header */}
       <div className="flex justify-between items-center mb-4">
         <h3 className="nav-text-medium text-lg">Chat with Hue</h3>
